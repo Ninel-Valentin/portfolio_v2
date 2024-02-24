@@ -1,0 +1,37 @@
+{
+  "name": "portofolio2",
+  "version": "1.0.0",
+  "description": "New version of portofolio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "react-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Portofolio_V2"
+  },
+  "author": "Ninel-Valentin B.",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.18.2",
+    "handlebars": "4.7.8",
+    "nodemailer": "6.9.9",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet": "6.1.0",
+    "react-scripts": "5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

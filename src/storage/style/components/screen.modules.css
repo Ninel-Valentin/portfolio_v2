@@ -1,0 +1,5 @@
+main {
+    background-color: var(--dark-gray-1);
+    width: 100vw;
+    height: calc(100vh - var(--taskBar-height));
+}
