@@ -1,14 +1,14 @@
 import React from 'react';
 
-import styles from '../../storage/style/screen/welcomeMessage.module.css';
+import styles from '../storage/style/components/welcomeMessage.module.css';
 
-import ApplyTypingAnimation from '../../storage/scripts/screen/helloMsgAnimation.js';
+import ApplyTypingAnimation from '../storage/scripts/screen/helloMsgAnimation.js';
 
 export default class WelcomeMessage extends React.Component {
     constructor(props) {
         super(props);
         this.toggleScreenDataRef = props.toggleScreenData;
-        
+
         window.sessionStorage.removeItem('canContinue');
     }
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import styles from '../storage/style/screen/screen.module.css';
-import WelcomeMessage from './Screen/WelcomeMessage';
-import DesktopSystem from './Screen/DesktopSystem';
+import styles from '../storage/style/components/screen.module.css';
 import { getCookie, setCookie } from '../storage/scripts/CookieManager';
+import WelcomeMessage from './WelcomeMessage';
+import DesktopSystem from './DesktopSystem';
 
 const Screen = () => {
     const [screenData, setScreenData] = useState({
@@ -29,7 +29,7 @@ function updateMessageCookieState() {
         let expiringDay = new Date();
         expiringDay.setMonth(expiringDay.getMonth() + 1)
         expiringDay = new Date(expiringDay).toUTCString();
-        
+
         setCookie('welcomeMessage', 'true', expiringDay)
         return false;
     }

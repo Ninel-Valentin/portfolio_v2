@@ -5,7 +5,7 @@
     --menu-bar-height: 2rem;
 }
 
-.appWindowFrame {
+.appInstanceWindow {
     min-width: min(50vh, 50vw);
     min-height: calc(.8 * min(50vh, 50vw));
     aspect-ratio: 1.25;
