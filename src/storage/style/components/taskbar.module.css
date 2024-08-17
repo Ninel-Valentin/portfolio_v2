@@ -1,3 +1,7 @@
+:root {
+    --taskBar-height: 3rem;
+}
+
 #taskBar {
     background-color: var(--dark-gray-0);
     width: 100vw;
@@ -7,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    z-index: 9999;
 }
 
 #taskBar>div {

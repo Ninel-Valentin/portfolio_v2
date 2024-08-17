@@ -1,17 +1,24 @@
 import React from 'react';
 
-import styles from '../../storage/style/components/Screen/welcomeMessage.module.css';
+import styles from '../../storage/style/screen/welcomeMessage.module.css';
 
 import ApplyTypingAnimation from '../../storage/scripts/screen/helloMsgAnimation.js';
 
-class WelcomeMessage extends React.Component {
+export default class WelcomeMessage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.toggleScreenDataRef = props.toggleScreenData;
+        
+        window.sessionStorage.removeItem('canContinue');
+    }
+
     componentDidMount() {
         ApplyTypingAnimation();
-        window.onclick = disableMessage;
+        window.onclick = () => { disableMessage(this.toggleScreenDataRef) };
     }
 
     render() {
-        return (<div data-select="welcomeElement">
+        return (<>
             <p
                 data-select="welcomeMsg"
                 className={styles.welcomeP}
@@ -26,16 +33,16 @@ class WelcomeMessage extends React.Component {
                 id={styles.continueMsg}>
                 Press any button to continue...
             </p>
-        </div>);
+        </>);
     }
 };
 
-function disableMessage() {
-    const msg = document.querySelector('[data-select="welcomeElement"]');
-    msg.parentNode.removeChild(msg);
-
-    // Remove the event
-    window.onclick = '';
+function disableMessage(setScreenDataRef) {
+    if (window.sessionStorage.getItem('canContinue')) {
+        // Remove the event
+        window.onclick = '';
+        setScreenDataRef({
+            screenOn: true
+        });
+    }
 }
-
-export default WelcomeMessage;
