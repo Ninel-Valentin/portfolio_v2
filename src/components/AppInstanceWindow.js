@@ -15,7 +15,7 @@ export default class AppInstanceWindow extends React.Component {
         // On closing, remove from zIndexArray
         this.id = props.id;
 
-        this.appName = props.appName;
+        this.name = props.name;
         this.isFocused = true;
         this.windowSizeState = Consts.windowSizeState.normal;
 
@@ -24,6 +24,10 @@ export default class AppInstanceWindow extends React.Component {
             x: 0,
             y: 0
         };
+
+        // Parent functions
+        this.closeWindowFunction = props.closeWindowFunction;
+        this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
     }
 
     render() {
@@ -40,11 +44,15 @@ export default class AppInstanceWindow extends React.Component {
             <div
                 data-select={`appInstanceWindow_${this.id}`}
                 className={`${styles.appInstanceWindow} unselectable`}
-                onMouseDown={(e) => { this.SetHighestZIndex() }}
+                onMouseDown={(e) => {
+                    // Don't handle click if the target is a menu bar button
+                    if (e.target.className)
+                        utils.setHighestZIndex(this.id)
+                }}
                 style={{
                     left: this.position.x,
                     top: this.position.y,
-                    zIndex: this.GetZIndex(this.id) || 0
+                    zIndex: utils.getZIndex(this.id) || 0
                 }}>
                 <section
                     onMouseDown={(e) => {
@@ -52,7 +60,7 @@ export default class AppInstanceWindow extends React.Component {
                         this.difference = this.GetHoldDifference(e);
                     }}
                     className={styles.appMenuBar}>
-                    <p>{this.appName}</p>
+                    <p>{this.name}</p>
                     <div>
                         {this.RenderMenuBarButtons()}
                     </div>
@@ -71,16 +79,24 @@ export default class AppInstanceWindow extends React.Component {
         return (<>
             <div
                 onMouseDown={(e) => {
+                    this.isBeingMoved = false;
+                    e.stopPropagation(); // Needed to not pass the event to parent window
                     // Set state minimized
                 }}
             > _ </div>
             <div
                 onMouseDown={(e) => {
+                    this.isBeingMoved = false;
+                    e.stopPropagation(); // Needed to not pass the event to parent window
+
                     // Set state maximized
                 }}
             > □ </div>
             <div
                 onMouseDown={(e) => {
+                    this.isBeingMoved = false;
+                    this.closeWindowFunction(this.name)
+                    e.stopPropagation(); // Needed to not pass the event to parent window
                     // Destroy self from array of instances from parent
                 }}
             > ⨉ </div>
@@ -101,7 +117,7 @@ export default class AppInstanceWindow extends React.Component {
         var targetX = e.clientX + this.difference.x,
             targetY = e.clientY + this.difference.y;
 
-        [targetX, targetY] = utils.ClampOnScreen(targetX, targetY);
+        [targetX, targetY] = utils.clampOnScreen(targetX, targetY);
 
         this.position = {
             x: targetX,
@@ -112,48 +128,6 @@ export default class AppInstanceWindow extends React.Component {
         const currentStyle = windowNode.getAttribute('style');
         const updatedStyle = currentStyle.replace(/left:.*?;/, `left:${targetX}px;`).replace(/top:.*?;/, `top: ${this.position.y}px;`);
         windowNode.setAttribute('style', updatedStyle);
-    }
-
-    SetHighestZIndex() {
-        const zIndexList = utils.getZIndexList();
-        let currentIndex = zIndexList[this.id];
-
-        zIndexList.forEach((value, key) => {
-            if (value > currentIndex) {
-                zIndexList[key]--;
-
-                let iteratedWindowNode = document.querySelector(`div[data-select="appInstanceWindow_${key}"]`);
-                let windowStyle = iteratedWindowNode.getAttribute('style');
-                let updatedWindowStyle = windowStyle.replace(/z-index:.*?;/, `z-index:${zIndexList[key]};`);
-                iteratedWindowNode.setAttribute('style', updatedWindowStyle);
-            }
-        });
-
-        let newIndex = zIndexList.length;
-        zIndexList[this.id] = newIndex;
-        utils.setZIndexList(zIndexList);
-
-        const windowNode = document.querySelector(`div[data-select="appInstanceWindow_${this.id}"]`);
-        const currentStyle = windowNode.getAttribute('style');
-        const updatedStyle = currentStyle.replace(/z-index:.*?;/, `z-index:${newIndex};`);
-        windowNode.setAttribute('style', updatedStyle);
-    }
-
-    GetZIndex(id) {
-        const zIndexList = utils.getZIndexList();
-        if (!isNaN(zIndexList[id]))
-            return zIndexList[id];
-        else {
-            let newValue = zIndexList.length;
-            this.AppendZIndex(id, newValue)
-            return newValue;
-        }
-    }
-
-    AppendZIndex(key, value) {
-        const zIndexList = utils.getZIndexList();
-        zIndexList[key] = value;
-        utils.setZIndexList(zIndexList);
     }
 }
 
