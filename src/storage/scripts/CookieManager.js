@@ -5,7 +5,7 @@
  */
 function getCookie(name) {
     let cookies = document.cookie?.split(';') || [];
-    let thisCookie = cookies.find(cookie => cookie.startsWith(`${name}=`))
+    let thisCookie = cookies.find(cookie => cookie.trim().startsWith(`${name}=`))
     let value = thisCookie?.split('=').pop();
     return value;
 }
@@ -17,7 +17,8 @@ function getCookie(name) {
  * @param {String} duration UTC String format of the expiring day
  */
 function setCookie(name, value, duration) {
-    const cookieBody = `${name}=${value}; expires=${duration}; path=/`
+    let expires = duration || "";
+    const cookieBody = `${name}=${value}; expires=${expires}; path=/`
     document.cookie = cookieBody;
 }
 

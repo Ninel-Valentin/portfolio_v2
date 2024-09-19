@@ -1,6 +1,14 @@
 :root {
     --border-blue-0: #416dba;
-    --border-blue-1: #13346d;
+    --border-blue-1: #38517d;
+    --border-blue-2: #13346d;
+
+    --dark-gray-0: #1c1d26;
+    --dark-gray-1: #1d1e2e;
+
+    --dark-gray-0-hover: #2f3253;
+
+    --light-gray-0: #aba485;
 
     --menu-bar-height: 2rem;
 }
@@ -16,6 +24,11 @@
     overflow: hidden;
 }
 
+.appInstanceWindow[class*="active"] {
+    border: 2px solid var(--border-blue-1);
+    border-top: none;
+}
+
 .appMenuBar {
     background-color: var(--border-blue-0);
     width: 100%;
@@ -25,16 +38,35 @@
     align-items: center;
 }
 
+.appInstanceWindow[class*="active"] .appMenuBar {
+    background-color: var(--border-blue-1);
+}
+
 .appMenuBar p {
     margin: 0;
+    height: 100%;
     width: fit-content;
     max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .appMenuBar div {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.appMenuBarIcon {
+    height: 100%;
+    margin: 5px;
+    aspect-ratio: 1;
+}
+
+.appMenuBarIcon svg {
+    height: 100%;
+    width: 100%;
 }
 
 .appMenuBar div>div {
@@ -44,10 +76,12 @@
 }
 
 .appMenuBar div>div:hover {
-    background-color: var(--border-blue-1);
+    background-color: var(--border-blue-2);
 }
 
 .appContent {
+    /* TODO */
+    /* background-color: var(--dark-gray-0); */
     width: 100%;
     height: calc(100% - var(--menu-bar-height));
 }

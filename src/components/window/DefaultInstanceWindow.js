@@ -1,21 +1,18 @@
 import React from 'react';
 
-import styles from '../storage/style/components/appWindow.module.css'
-import Consts from '../storage/scripts/utils/Consts';
-import utils from '../storage/scripts/utils/utils';
+import styles from '../../storage/style/components/appWindow.module.css'
+import Consts from '../../storage/scripts/utils/Consts.js'
+import utils from '../../storage/scripts/utils/utils.js';
+import reactUtils from '../../storage/scripts/utils/reactUtils.js';
 
-export default class AppInstanceWindow extends React.Component {
+export default class DefaultInstanceWindow extends React.Component {
     constructor(props) {
         super(props);
 
-        this.position = props.position || {
-            x: 0,
-            y: 0
-        };
-        // On closing, remove from zIndexArray
         this.id = props.id;
-
         this.name = props.name;
+        this.src = props.src;
+
         this.isFocused = true;
         this.windowSizeState = Consts.windowSizeState.normal;
 
@@ -25,6 +22,13 @@ export default class AppInstanceWindow extends React.Component {
             y: 0
         };
 
+        this.position = props.position || {
+            x: 0,
+            y: 0
+        };
+
+        this.render = this.render.bind(this);
+        this.desktopSystemReference = props.desktopSystemReference;
         // Parent functions
         this.closeWindowFunction = props.closeWindowFunction;
         this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
@@ -46,8 +50,10 @@ export default class AppInstanceWindow extends React.Component {
                 className={`${styles.appInstanceWindow} unselectable`}
                 onMouseDown={(e) => {
                     // Don't handle click if the target is a menu bar button
-                    if (e.target.className)
+                    if (e.target.className) {
                         utils.setHighestZIndex(this.id)
+                        utils.highlightWindow(this.id, e.target.parentNode);
+                    }
                 }}
                 style={{
                     left: this.position.x,
@@ -60,7 +66,14 @@ export default class AppInstanceWindow extends React.Component {
                         this.difference = this.GetHoldDifference(e);
                     }}
                     className={styles.appMenuBar}>
-                    <p>{this.name}</p>
+                    <p>
+                        <span className={styles.appMenuBarIcon}>
+                            {reactUtils.loadDisplayIcon(
+                                Consts.applications.name[this.name]
+                            )}
+                        </span>
+                        {Consts.applications.title[this.name]}
+                    </p>
                     <div>
                         {this.RenderMenuBarButtons()}
                     </div>
@@ -68,6 +81,7 @@ export default class AppInstanceWindow extends React.Component {
                 <section className={styles.appContent}>
                     <iframe
                         className={styles.inactiveFrame}
+                        src={this.src}
                         allowFullScreen={true}
                     ></iframe>
                 </section>
@@ -81,6 +95,7 @@ export default class AppInstanceWindow extends React.Component {
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
                     e.stopPropagation(); // Needed to not pass the event to parent window
+
                     // Set state minimized
                 }}
             > _ </div>
@@ -97,7 +112,6 @@ export default class AppInstanceWindow extends React.Component {
                     this.isBeingMoved = false;
                     this.closeWindowFunction(this.name)
                     e.stopPropagation(); // Needed to not pass the event to parent window
-                    // Destroy self from array of instances from parent
                 }}
             > ⨉ </div>
         </>);

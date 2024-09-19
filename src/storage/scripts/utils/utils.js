@@ -1,10 +1,21 @@
-export default class utils {
-    static getZIndexList() {
-        return JSON.parse(window.sessionStorage.getItem('appsZIndex') || '[]');
-    }
+import { getCookie, setCookie } from '../CookieManager.js';
 
-    static setZIndexList(list) {
-        window.sessionStorage.setItem('appsZIndex', JSON.stringify(list));
+export default class utils {
+
+    static highlightWindow(id, parent = null) {
+        // Unhighlight the previous window
+        let currentId = getCookie("activeWindowId");
+        if (currentId) {
+            let currentWindow = document.querySelector(`div[data-select="appInstanceWindow_${currentId}"]`);
+            if (currentWindow)
+                currentWindow.className = [...currentWindow.classList].filter(className => !className.includes('active')).join(' ');
+
+            // Highlight this window
+            if (!parent)
+                parent = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
+            parent.className += ` active`;
+        }
+        setCookie("activeWindowId", id.toString())
     }
 
     static clampOnScreen(width, height) {
@@ -19,52 +30,91 @@ export default class utils {
         return parseFloat(getComputedStyle(document.documentElement).fontSize);
     }
 
-    static setHighestZIndex(id) {
-        const zIndexList = utils.getZIndexList();
-        let currentIndex = zIndexList[id];
+    static getInstanceMap() {
+        return JSON.parse(window.sessionStorage.getItem('appsInstances') || '{}');
+    }
 
-        zIndexList.forEach((value, key) => {
-            if (value > currentIndex) {
-                zIndexList[key]--;
+    static setInstanceMap(mapping) {
+        window.sessionStorage.setItem('appsInstances', JSON.stringify(mapping));
+    }
 
-                let iteratedWindowNode = document.querySelector(`div[data-select="appInstanceWindow_${key}"]`);
-                let windowStyle = iteratedWindowNode.getAttribute('style');
-                let updatedWindowStyle = windowStyle.replace(/z-index:.*?;/, `z-index:${zIndexList[key]};`);
-                iteratedWindowNode.setAttribute('style', updatedWindowStyle);
-            }
-        });
+    /**
+     * removes the ZIndex of the instanceId
+     * @param {*} instanceId - id of the instance
+     */
+    static removeInstanceId(instanceIdToRemove) {
+        const existingMapping = this.getInstanceMap();
 
-        let newIndex = zIndexList.length;
-        zIndexList[id] = newIndex;
-        utils.setZIndexList(zIndexList);
+        let filteredMap = Object.entries(existingMapping).filter(([instanceId, zIndex]) => instanceIdToRemove != instanceId)
+        filteredMap = filteredMap.reduce((currentObj, [instanceId, zIndex]) => {
+            currentObj[instanceId] = existingMapping[instanceId]
+            return currentObj;
+        }, {});
+        this.setInstanceMap(filteredMap)
+    }
 
-        const windowNode = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
+    static addNewZIndex(instanceIdToAdd) {
+        const existingMapping = this.getInstanceMap()
+        existingMapping[instanceIdToAdd] = this.getNextHighestZIndex() + 1;
+        this.setInstanceMap(existingMapping);
+    }
+
+    static getZIndex(instanceId) {
+        return this.getInstanceMap()[instanceId];
+    }
+
+    static getCurrentHighestZIndex() {
+        const existingMapping = this.getInstanceMap();
+        let mapInstances = Object.values(existingMapping)
+        let highestZIndex = mapInstances.length ? Math.max(...mapInstances.map(zIndex => +zIndex)) : -1;
+        return highestZIndex;
+    }
+
+    static getNextHighestZIndex() {
+        let currentHighestIndex = this.getCurrentHighestZIndex();
+        return currentHighestIndex == -1 ? 0 : currentHighestIndex;
+    }
+
+    static setHighestZIndex(instanceIdToModify) {
+        const existingMapping = utils.getInstanceMap();
+        let currentZIndex = existingMapping[instanceIdToModify];
+
+        let highestZIndex = this.getCurrentHighestZIndex();
+        if (currentZIndex) {
+            for (let [instanceId, zIndex] of Object.entries(existingMapping))
+                // Do nothing to lower indexes
+                // Decrease by 1 the higher indexes
+                if (zIndex > currentZIndex)
+                    existingMapping[instanceId]--;
+        }
+        // else
+        //     highestZIndex++;
+
+        // Replace the targetId
+        existingMapping[instanceIdToModify] = highestZIndex;
+
+        utils.setInstanceMap(existingMapping);
+
+        const windowNode = document.querySelector(`div[data-select="appInstanceWindow_${instanceIdToModify}"]`);
         const currentStyle = windowNode.getAttribute('style');
-        const updatedStyle = currentStyle.replace(/z-index:.*?;/, `z-index:${newIndex};`);
+        const updatedStyle = currentStyle.replace(/z-index:.*?;/, `z-index:${highestZIndex};`);
         windowNode.setAttribute('style', updatedStyle);
     }
 
-    static getZIndex(id) {
-        const zIndexList = this.getZIndexList();
-        if (!isNaN(zIndexList[id]))
-            return zIndexList[id];
-        else {
-            let newValue = zIndexList.length;
-            this.appendZIndex(id, newValue)
-            return newValue;
-        }
-    }
+    // static appendZIndex(instanceId) {
+    //     const zIndexList = this.getZIndexMap();
+    //     zIndexList[instanceId] = this.getHighestZIndex() + 1;
+    //     this.setZIndexMap(zIndexList);
+    // }
 
-    static appendZIndex(key, value) {
-        const zIndexList = this.getZIndexList();
-        zIndexList[key] = value;
-        this.setZIndexList(zIndexList);
-    }
-
-    static getNextId() {
-        const instanceIdsStorageName = 'instanceIds';
-        const instanceIds = JSON.parse(sessionStorage.getItem(instanceIdsStorageName) || '[]');
+    /**
+     * Get the next available instance ID
+     */
+    static getNextInstanceId() {
+        const existingMapping = this.getInstanceMap();
+        let instanceIds = Object.keys(existingMapping).map(key => +key);
         instanceIds.sort(this.sortingAlgorithm);
+
         for (let i = 1; i < instanceIds.length; i++) {
             let previousId = instanceIds[i - 1];
             let currentId = instanceIds[i];
@@ -74,19 +124,7 @@ export default class utils {
         }
 
         nextId = nextId || instanceIds.length;
-        instanceIds.push(nextId);
-        instanceIds.sort(this.sortingAlgorithm);
-
-        sessionStorage.setItem(instanceIdsStorageName, JSON.stringify(instanceIds));
         return nextId;
-    }
-
-    static removeId(idToRemove) {
-        const instanceIdsStorageName = 'instanceIds';
-        let instanceIds = JSON.parse(sessionStorage.getItem(instanceIdsStorageName) || '[]');
-        instanceIds = instanceIds.filter(id => id != idToRemove);
-        instanceIds.sort(this.sortingAlgorithm);
-        sessionStorage.setItem(instanceIdsStorageName, JSON.stringify(instanceIds));
     }
 
     static sortingAlgorithm = (a, b) => a - b;
