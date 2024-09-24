@@ -22,16 +22,16 @@ const DateTime = () => {
     if (!timeData.interval)
         setInterval(ProcessDateTime, 500);
 
-    return (<>
-        <p id={styles.datetime} className='unselectable'>
-            <span>
-                {timeData.time}
-            </span>
-            <span>
-                {timeData.date}
-            </span>
-        </p >
-    </>);
+    return (<p
+        className={`${styles.interactiveTile} unselectable`}
+        id={styles.datetime}>
+        <span>
+            {timeData.time}
+        </span>
+        <span>
+            {timeData.date}
+        </span>
+    </p >);
 };
 
 export default DateTime;

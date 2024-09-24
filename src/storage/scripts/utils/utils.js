@@ -2,21 +2,6 @@ import { getCookie, setCookie } from '../CookieManager.js';
 
 export default class utils {
 
-    static highlightWindow(id) {
-        // Unhighlight the previous window
-        let currentZIndex = getCookie("activeWindowId");
-        if (currentZIndex) {
-            let currentWindow = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
-            if (currentWindow)
-                currentWindow.className = [...currentWindow.classList].filter(className => !className.includes('active')).join(' ');
-
-            // Highlight this window
-            let parent = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
-            parent.className += ` active`;
-        }
-        setCookie("activeWindowId", id.toString())
-    }
-
     static clampOnScreen(width, height) {
         return [
             Math.max(0, Math.min(width, window.innerWidth)),
@@ -86,15 +71,12 @@ export default class utils {
                 if (zIndex > currentZIndex)
                     this.applyZIndexChange(instanceId, --existingMapping[instanceId]);
         }
-        // else
-        //     highestZIndex++;
 
         // Replace the targetId
         existingMapping[instanceIdToModify] = highestZIndex;
         utils.setInstanceMap(existingMapping);
 
         this.applyZIndexChange(instanceIdToModify, highestZIndex);
-        this.highlightWindow(instanceIdToModify);
     }
 
     static applyZIndexChange(instanceIdToModify, zIndex) {

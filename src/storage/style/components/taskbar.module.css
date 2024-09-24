@@ -1,6 +1,6 @@
 :root {
     --taskBar-height: 3rem;
-    --osLogo-padding: .25rem;
+    --taskbar-icons-padding: .25rem;
 }
 
 #taskBar {
@@ -15,34 +15,50 @@
     z-index: 9999;
 }
 
-#taskBar>* {
-    height: calc(var(--taskBar-height) - 2*var(--osLogo-padding));
-    width: calc(var(--taskBar-height) - 2*var(--osLogo-padding));
-    padding: var(--osLogo-padding);
+#taskBar>.interactiveTile {
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
+    padding: var(--taskbar-icons-padding);
     aspect-ratio: 1;
     margin: 0 .5rem;
 
     transition: all .1s ease-out;
-}
-
-#taskBar>svg:hover,
-#taskBar>p:hover {
-    cursor: pointer;
-    background-color: var(--dark-gray-0-hover);
     border-radius: 5px;
 }
 
-#taskBar svg path,
-#taskBar svg circle {
+#taskBar .interactiveTile:hover {
+    cursor: pointer;
+    background-color: var(--dark-gray-0-hover);
+}
+
+#osLogo {
     fill: white;
 }
 
 #openApps {
     width: calc(100vw - 3* var(--taskBar-height));
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.taskbarAppInstance {
+    padding: var(--taskbar-icons-padding);
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
+}
+
+.taskbarAppInstance.focused{
+    background-color: var(--dark-blue-0);
+}
+
+.taskbarAppInstance>* {
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-icons-padding));
 }
 
 #datetime {
-    width: calc(2* var(--taskBar-height));
+    width: calc(2* var(--taskBar-height)) !important;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -8,8 +8,9 @@ export default class Screen extends React.Component {
     constructor(props) {
         super(props)
 
-        // this.setAppData = props.setAppData;
-        // console.log("Screen constructor")
+        this.getAppData = props.getAppData;
+        this.setAppData = props.setAppData;
+        this.forceUpdateApp = props.forceUpdateApp;
 
         this.screenData = {
             screenOn: updateMessageCookieState()
@@ -23,7 +24,7 @@ export default class Screen extends React.Component {
     render() {
         const renderScreen = {
             false: <WelcomeMessage toggleScreenData={this.setScreenData} />,
-            true: <DesktopSystem />
+            true: <DesktopSystem forceUpdateApp={this.forceUpdateApp} setAppData={this.setAppData} getAppData={this.getAppData} />
         };
 
         return (<>

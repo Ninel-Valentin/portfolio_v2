@@ -13,7 +13,7 @@ export default class DefaultInstanceWindow extends React.Component {
         this.name = props.name;
         this.src = props.src;
 
-        this.isFocused = true;
+        this.active = props.active;
         this.windowSizeState = Consts.windowSizeState.normal;
 
         this.isBeingMoved = false;
@@ -21,6 +21,8 @@ export default class DefaultInstanceWindow extends React.Component {
             x: 0,
             y: 0
         };
+        this.setActiveInstanceId = props.setActiveInstanceFunction;
+        this.getActiveInstanceId = props.getActiveInstanceFunction;
 
         this.position = props.position || {
             x: 0,
@@ -28,10 +30,13 @@ export default class DefaultInstanceWindow extends React.Component {
         };
 
         this.render = this.render.bind(this);
-        this.desktopSystemReference = props.desktopSystemReference;
         // Parent functions
         this.closeWindowFunction = props.closeWindowFunction;
         this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
+    }
+
+    isActive() {
+        return this.getActiveInstanceId() == this.id;
     }
 
     render() {
@@ -47,11 +52,15 @@ export default class DefaultInstanceWindow extends React.Component {
         return (<>
             <div
                 data-select={`appInstanceWindow_${this.id}`}
-                className={`${styles.appInstanceWindow} unselectable`}
+                className={`${styles.appInstanceWindow} unselectable${this.isActive() ? ' active' : ''}`}
                 onMouseDown={(e) => {
                     // Don't handle click if the target is a menu bar button
-                    if (e.target.className)
-                        utils.setHighestZIndex(this.id)
+                    if (e.target.className) {
+                        let instanceId = this.id;
+                        // Set active instanceId
+                        utils.setHighestZIndex(instanceId);
+                        this.setActiveInstanceId(instanceId);
+                    }
                 }}
                 style={{
                     left: this.position.x,
