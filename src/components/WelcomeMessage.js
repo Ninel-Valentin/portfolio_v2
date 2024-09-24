@@ -15,6 +15,7 @@ export default class WelcomeMessage extends React.Component {
     componentDidMount() {
         ApplyTypingAnimation();
         window.onclick = () => { disableMessage(this.toggleScreenDataRef) };
+        window.onkeydown = () => { disableMessage(this.toggleScreenDataRef) };
     }
 
     render() {

@@ -1,24 +1,37 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from '../storage/style/components/screen.module.css';
 import { getCookie, setCookie } from '../storage/scripts/CookieManager.js';
 import WelcomeMessage from './WelcomeMessage.js';
 import DesktopSystem from './DesktopSystem.js';
 
-const Screen = () => {
-    const [screenData, setScreenData] = useState({
-        screenOn: updateMessageCookieState()
-    });
+export default class Screen extends React.Component {
+    constructor(props) {
+        super(props)
 
-    const renderScreen = {
-        false: <WelcomeMessage toggleScreenData={setScreenData} />,
-        true: <DesktopSystem />
-    };
+        // this.setAppData = props.setAppData;
+        // console.log("Screen constructor")
 
-    return (<>
-        <section id={styles.screen}>
-            {renderScreen[screenData.screenOn]}
-        </section>
-    </>);
+        this.screenData = {
+            screenOn: updateMessageCookieState()
+        };
+    }
+
+    setScreenData(value) {
+        this.screenData = value;
+    }
+
+    render() {
+        const renderScreen = {
+            false: <WelcomeMessage toggleScreenData={this.setScreenData} />,
+            true: <DesktopSystem />
+        };
+
+        return (<>
+            <section id={styles.screen}>
+                {renderScreen[this.screenData.screenOn]}
+            </section>
+        </>);
+    }
 };
 
 function updateMessageCookieState() {
@@ -35,5 +48,3 @@ function updateMessageCookieState() {
     }
     return true;
 }
-
-export default Screen;
