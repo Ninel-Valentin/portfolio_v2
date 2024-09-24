@@ -2,17 +2,16 @@ import { getCookie, setCookie } from '../CookieManager.js';
 
 export default class utils {
 
-    static highlightWindow(id, parent = null) {
+    static highlightWindow(id) {
         // Unhighlight the previous window
-        let currentId = getCookie("activeWindowId");
-        if (currentId) {
-            let currentWindow = document.querySelector(`div[data-select="appInstanceWindow_${currentId}"]`);
+        let currentZIndex = getCookie("activeWindowId");
+        if (currentZIndex) {
+            let currentWindow = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
             if (currentWindow)
                 currentWindow.className = [...currentWindow.classList].filter(className => !className.includes('active')).join(' ');
 
             // Highlight this window
-            if (!parent)
-                parent = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
+            let parent = document.querySelector(`div[data-select="appInstanceWindow_${id}"]`);
             parent.className += ` active`;
         }
         setCookie("activeWindowId", id.toString())
@@ -85,19 +84,23 @@ export default class utils {
                 // Do nothing to lower indexes
                 // Decrease by 1 the higher indexes
                 if (zIndex > currentZIndex)
-                    existingMapping[instanceId]--;
+                    this.applyZIndexChange(instanceId, --existingMapping[instanceId]);
         }
         // else
         //     highestZIndex++;
 
         // Replace the targetId
         existingMapping[instanceIdToModify] = highestZIndex;
-
         utils.setInstanceMap(existingMapping);
 
+        this.applyZIndexChange(instanceIdToModify, highestZIndex);
+        this.highlightWindow(instanceIdToModify);
+    }
+
+    static applyZIndexChange(instanceIdToModify, zIndex) {
         const windowNode = document.querySelector(`div[data-select="appInstanceWindow_${instanceIdToModify}"]`);
         const currentStyle = windowNode.getAttribute('style');
-        const updatedStyle = currentStyle.replace(/z-index:.*?;/, `z-index:${highestZIndex};`);
+        const updatedStyle = currentStyle.replace(/z-index:.*?;/, `z-index:${zIndex};`);
         windowNode.setAttribute('style', updatedStyle);
     }
 
@@ -115,15 +118,14 @@ export default class utils {
         let instanceIds = Object.keys(existingMapping).map(key => +key);
         instanceIds.sort(this.sortingAlgorithm);
 
-        for (let i = 1; i < instanceIds.length; i++) {
-            let previousId = instanceIds[i - 1];
-            let currentId = instanceIds[i];
+        var nextId = instanceIds.length;
+        const largestId = instanceIds[instanceIds.length - 1];
+        for (let i = 0; i <= largestId; i++)
+            if (!instanceIds.includes(i)) {
+                nextId = i;
+                break;
+            }
 
-            if (currentId - previousId > 1)
-                var nextId = previousId + 1;
-        }
-
-        nextId = nextId || instanceIds.length;
         return nextId;
     }
 

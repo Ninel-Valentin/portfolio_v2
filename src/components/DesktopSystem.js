@@ -3,10 +3,10 @@ import React from 'react';
 import styles from '../storage/style/components/desktopSystem.module.css';
 import AppInstanceIcon from './icons/AppInstanceIcon.js';
 import DirectoryInstanceIcon from './icons/DirectoryInstanceIcon.js'
-import AppInstanceWindow from './window/AppInstanceWindow.js'
-import DirectoryInstanceWindow from './window/DirectoryInstanceWindow.js'
-import utils from '../storage/scripts/utils/utils';
-import Consts from '../storage/scripts/utils/Consts';
+import AppInstanceWindow from './instance/AppInstanceWindow.js'
+import DirectoryInstanceWindow from './instance/DirectoryInstanceWindow.js'
+import utils from '../storage/scripts/utils/utils.js';
+import Consts from '../storage/scripts/utils/Consts.js';
 
 export default class DesktopSystem extends React.Component {
     constructor(props) {
@@ -36,8 +36,6 @@ export default class DesktopSystem extends React.Component {
             <main>
                 {this.RenderDesktopIcons()}
                 {this.RenderInstanceWindows()}
-                {/* <AppInstanceWindow id={0} position={{ x: 100, y: 500 }} appName="Test" /> */}
-                {/* <AppInstanceWindow id={1} appName="test2" /> */}
             </main>
         </>);
     }
@@ -61,9 +59,7 @@ export default class DesktopSystem extends React.Component {
         var instanceId;
         if (instance) {
             // if it exists, focus on it
-            // Focus
             instanceId = instance.id;
-            utils.highlightWindow(instanceId)
             utils.setHighestZIndex(instanceId)
         }
         else {

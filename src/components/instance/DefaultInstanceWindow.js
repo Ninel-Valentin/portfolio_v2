@@ -50,10 +50,8 @@ export default class DefaultInstanceWindow extends React.Component {
                 className={`${styles.appInstanceWindow} unselectable`}
                 onMouseDown={(e) => {
                     // Don't handle click if the target is a menu bar button
-                    if (e.target.className) {
+                    if (e.target.className)
                         utils.setHighestZIndex(this.id)
-                        utils.highlightWindow(this.id, e.target.parentNode);
-                    }
                 }}
                 style={{
                     left: this.position.x,

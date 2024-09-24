@@ -1,5 +1,5 @@
-import Screen from "../components/Screen";
-import Taskbar from "../components/Taskbar";
+import Screen from "../components/Screen.js";
+import Taskbar from "../components/taskbar/Taskbar.js";
 
 const App = () => {
     return (<>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from '../storage/style/components/screen.module.css';
-import { getCookie, setCookie } from '../storage/scripts/CookieManager';
-import WelcomeMessage from './WelcomeMessage';
-import DesktopSystem from './DesktopSystem';
+import { getCookie, setCookie } from '../storage/scripts/CookieManager.js';
+import WelcomeMessage from './WelcomeMessage.js';
+import DesktopSystem from './DesktopSystem.js';
 
 const Screen = () => {
     const [screenData, setScreenData] = useState({

@@ -1,5 +1,6 @@
 :root {
     --taskBar-height: 3rem;
+    --osLogo-padding: .25rem;
 }
 
 #taskBar {
@@ -10,31 +11,42 @@
     bottom: 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     z-index: 9999;
 }
 
-#taskBar>div {
-    height: 60%;
-    padding: .25rem;
+#taskBar>* {
+    height: calc(var(--taskBar-height) - 2*var(--osLogo-padding));
+    width: calc(var(--taskBar-height) - 2*var(--osLogo-padding));
+    padding: var(--osLogo-padding);
     aspect-ratio: 1;
     margin: 0 .5rem;
-    cursor: pointer;
 
     transition: all .1s ease-out;
 }
 
-#taskBar>div:hover {
+#taskBar>svg:hover,
+#taskBar>p:hover {
+    cursor: pointer;
     background-color: var(--dark-gray-0-hover);
     border-radius: 5px;
-}
-
-#taskBar svg {
-    width: 100%;
-    height: 100%;
 }
 
 #taskBar svg path,
 #taskBar svg circle {
     fill: white;
+}
+
+#openApps {
+    width: calc(100vw - 3* var(--taskBar-height));
+}
+
+#datetime {
+    width: calc(2* var(--taskBar-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
