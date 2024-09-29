@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import Screen from "../components/Screen.js";
 import Taskbar from "../components/taskbar/Taskbar.js";
+import appUtils from "../storage/scripts/utils/appUtils.js";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.appData = {
             // Array of instances of AppWindow
-            appInstances: [],
-            activeInstanceId: null,
+            instances: {
+                entries: [],
+                /** JSON Schema
+                 * type: Consts.instanceType[App/Directory]
+                 * id: String
+                 * name: String
+                 * src: String/null
+                 * zIndex: number
+                 */
+                activeId: null
+            },
             taskbar: {
                 activeContext: null
+            },
+            screen: {
+
             }
         };
 
@@ -18,6 +31,9 @@ export default class App extends React.Component {
         this.getAppData = this.getAppData.bind(this);
         this.setAppData = this.setAppData.bind(this);
         this.forceUpdateApp = this.forceUpdateApp.bind(this);
+
+        // Main point of control
+        this.appUtils = new appUtils(this.setAppData, this.getAppData, this.forceUpdateApp);
     }
 
     getAppData() {
@@ -34,14 +50,8 @@ export default class App extends React.Component {
 
     render() {
         return (<>
-            <Screen
-                forceUpdateApp={this.forceUpdateApp}
-                setAppData={this.setAppData}
-                getAppData={this.getAppData} />
-            <Taskbar
-                forceUpdateApp={this.forceUpdateApp}
-                setAppData={this.setAppData}
-                getAppData={this.getAppData} />
+            <Screen appUtils={this.appUtils} />
+            <Taskbar appUtils={this.appUtils} />
         </>);
     }
 }

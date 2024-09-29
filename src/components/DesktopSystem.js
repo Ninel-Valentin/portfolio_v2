@@ -11,26 +11,14 @@ import Consts from '../storage/scripts/utils/Consts.js';
 export default class DesktopSystem extends React.Component {
     constructor(props) {
         super(props);
-
-        this.instanceWindowSize = {
-            // Approximation
-            height: 500,
-            width: 650
-        }
         this.appOffset = 50;
 
-        this.getAppData = props.getAppData;
-        this.setAppData = props.setAppData;
-        this.forceUpdateApp = props.forceUpdateApp;
+        this.appUtils = props.appUtils;
 
         // Bind the methods to the DesktopSystem instance
-        this.setActiveInstanceId = this.setActiveInstanceId.bind(this);
-        this.getActiveInstanceId = this.getActiveInstanceId.bind(this);
-
         this.enableWindowInstance = this.enableWindowInstance.bind(this);
         this.closeInstance = this.closeInstance.bind(this);
         this.createWindowInstance = this.createWindowInstance.bind(this);
-        this.createDirectoryInstance = this.createDirectoryInstance.bind(this);
     }
 
     render() {
@@ -42,34 +30,26 @@ export default class DesktopSystem extends React.Component {
         </>);
     }
 
-    setActiveInstanceId(instanceId) {
-        this.setAppData({
-            ...this.getAppData(),
-            activeInstanceId: instanceId
-        });
-        this.forceUpdateApp()
-    }
-
-    getActiveInstanceId() {
-        return this.getAppData().activeInstanceId;
-    }
-
     getNextSpawnPosition(iteration) {
         // iteration + 1 for additional offset in the corner
-        const rowsPerColumn = Math.floor((window.innerHeight - this.instanceWindowSize.height) / this.appOffset);
+        const rowsPerColumn = Math.floor((window.innerHeight - Consts.windowInstanceSize.height) / this.appOffset);
         const horizontalIteration = Math.floor(iteration / rowsPerColumn)
         const verticalIteration = (iteration % rowsPerColumn) + 1;
 
-        let x = (this.instanceWindowSize.width + this.appOffset) * horizontalIteration + this.appOffset * verticalIteration
+        let x = (Consts.windowInstanceSize.width + this.appOffset) * horizontalIteration + this.appOffset * verticalIteration
         let y = this.appOffset * verticalIteration;
 
         return { x, y };
     }
 
-    enableWindowInstance(instanceName, src = null, appName) {
+    /**
+     * Checks for the instanceName, if it exists, it will be focused, else create it
+     */
+    enableWindowInstance(instanceName, appName, src = null) {
         if (!instanceName) return;
 
-        const appInstances = this.getAppData().appInstances;
+        const appData = this.appUtils.getAppData();
+        const appInstances = appData.instances.entries;
 
         let instance = appInstances.find(appInstance => appInstance.name == instanceName);
         var instanceId;
@@ -77,69 +57,33 @@ export default class DesktopSystem extends React.Component {
             // if it exists, focus on it
             instanceId = instance.id;
             // Set active instanceId
-            utils.setHighestZIndex(instanceId)
+            this.appUtils.setHighestZIndex(instanceId);
         }
-        else {
+        else
             // Open app window / directory
-            if (appName.includes('App'))
-                instanceId = this.createWindowInstance(instanceName, src)
-            else
-                instanceId = this.createDirectoryInstance(instanceName)
-            utils.addNewZIndex(instanceId);
-        }
+            instanceId = this.createWindowInstance(instanceName, appName, src)
 
-        this.setAppData({
-            ...this.getAppData(),
-            activeInstanceId: instanceId
-        });
-
-        this.forceUpdateApp();
+        this.appUtils.setActiveInstanceId(instanceId);
+        this.appUtils.forceUpdateApp();
     }
 
-    createWindowInstance(name, src = null) {
-        let id = utils.getNextInstanceId();
-        const appInstances = this.getAppData().appInstances;
-        appInstances.push({
-            type: Consts.instanceType.App,
+    createWindowInstance(name, appName, src = null) {
+        let id = this.appUtils.getNextInstanceId();
+
+        this.appUtils.addNewInstance({
+            type: appName.includes('App') ? Consts.instanceType.App : Consts.instanceType.Directory,
             id,
             name,
             src
-        });
-        this.setAppData({
-            ...this.getAppData(),
-            appInstances
-        });
-        return id;
-    }
-
-    createDirectoryInstance(name) {
-        let id = utils.getNextInstanceId();
-        const appInstances = this.getAppData().appInstances;
-        appInstances.push({
-            type: Consts.instanceType.Directory,
-            id,
-            name
-        });
-        this.setAppData({
-            ...this.getAppData(),
-            appInstances
         });
         return id;
     }
 
     closeInstance(instanceName) {
         if (!instanceName) return;
-        const appInstances = this.getAppData().appInstances;
-        let instance = appInstances.find(appInstance => appInstance.name == instanceName);
-        if (instance) {
-            // Remove instance
-            this.setAppData({
-                ...this.getAppData(),
-                appInstances: appInstances.filter(appInstance => appInstance.name != instanceName)
-            });
-            utils.removeInstanceId(instance.id);
-            this.forceUpdateApp()
-        }
+
+        this.appUtils.removeInstance(instanceName);
+        this.appUtils.forceUpdateApp()
     }
 
     RenderDesktopIcons() {
@@ -156,14 +100,13 @@ export default class DesktopSystem extends React.Component {
     }
 
     RenderInstanceWindows() {
-        const appData = this.getAppData();
-        return (<>{appData.appInstances.map((appInstance, iteration) => {
+        const appData = this.appUtils.getAppData();
+        return (<>{appData.instances.entries.map((appInstance, iteration) => {
             let position = this.getNextSpawnPosition(iteration);
             switch (appInstance.type) {
                 case Consts.instanceType.App:
                     return <AppInstanceWindow
-                        setActiveInstanceFunction={this.setActiveInstanceId}
-                        getActiveInstanceFunction={this.getActiveInstanceId}
+                        appUtils={this.appUtils}
                         closeWindowFunction={this.closeInstance}
                         position={position}
                         name={appInstance.name}
@@ -172,8 +115,7 @@ export default class DesktopSystem extends React.Component {
                         key={`appInstanceWindow_key_${appInstance.id}`} />
                 case Consts.instanceType.Directory:
                     return <DirectoryInstanceWindow
-                        setActiveInstanceFunction={this.setActiveInstanceId}
-                        getActiveInstanceFunction={this.getActiveInstanceId}
+                        appUtils={this.appUtils}
                         closeWindowFunction={this.closeInstance}
                         position={position}
                         name={appInstance.name}

@@ -21,22 +21,17 @@ export default class DefaultInstanceWindow extends React.Component {
             x: 0,
             y: 0
         };
-        this.setActiveInstanceId = props.setActiveInstanceFunction;
-        this.getActiveInstanceId = props.getActiveInstanceFunction;
 
         this.position = props.position || {
             x: 0,
             y: 0
         };
 
+        this.appUtils = props.appUtils;
         this.render = this.render.bind(this);
         // Parent functions
         this.closeWindowFunction = props.closeWindowFunction;
         this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
-    }
-
-    isActive() {
-        return this.getActiveInstanceId() == this.id;
     }
 
     render() {
@@ -52,20 +47,21 @@ export default class DefaultInstanceWindow extends React.Component {
         return (<>
             <div
                 data-select={`appInstanceWindow_${this.id}`}
-                className={`${styles.appInstanceWindow} unselectable${this.isActive() ? ' active' : ''}`}
+                className={`${styles.appInstanceWindow} unselectable${this.appUtils.isIdActive(this.id) ? ' active' : ''}`}
                 onMouseDown={(e) => {
                     // Don't handle click if the target is a menu bar button
                     if (e.target.className) {
                         let instanceId = this.id;
                         // Set active instanceId
-                        utils.setHighestZIndex(instanceId);
-                        this.setActiveInstanceId(instanceId);
+                        this.appUtils.setHighestZIndex(instanceId);
+                        this.appUtils.setActiveInstanceId(instanceId);
+                        this.appUtils.forceUpdateApp();
                     }
                 }}
                 style={{
                     left: this.position.x,
                     top: this.position.y,
-                    zIndex: utils.getZIndex(this.id) || 0
+                    zIndex: this.appUtils.getZIndex(this.id) || 0
                 }}>
                 <section
                     onMouseDown={(e) => {

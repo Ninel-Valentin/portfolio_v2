@@ -3,19 +3,19 @@ import React from 'react';
 import styles from '../storage/style/components/welcomeMessage.module.css';
 
 import ApplyTypingAnimation from '../storage/scripts/screen/helloMsgAnimation.js';
+import { setCookie } from '../storage/scripts/CookieManager.js';
 
 export default class WelcomeMessage extends React.Component {
     constructor(props) {
         super(props);
-        this.toggleScreenDataRef = props.toggleScreenData;
 
-        window.sessionStorage.removeItem('canContinue');
+        this.forceUpdateScreen = props.forceUpdateScreen;
     }
 
     componentDidMount() {
         ApplyTypingAnimation();
-        window.onclick = () => { disableMessage(this.toggleScreenDataRef) };
-        window.onkeydown = () => { disableMessage(this.toggleScreenDataRef) };
+        window.onclick = () => { this.disableMessage() };
+        window.onkeydown = () => { this.disableMessage() };
     }
 
     render() {
@@ -36,14 +36,19 @@ export default class WelcomeMessage extends React.Component {
             </p>
         </>);
     }
-};
 
-function disableMessage(setScreenDataRef) {
-    if (window.sessionStorage.getItem('canContinue')) {
+    disableMessage() {
+        let expiringDay = new Date();
+        expiringDay.setMonth(expiringDay.getMonth() + 1)
+        expiringDay = new Date(expiringDay).toUTCString();
+        setCookie('welcomeMessage', 'true', expiringDay)
+
         // Remove the event
         window.onclick = '';
-        setScreenDataRef({
-            screenOn: true
-        });
+        // TODO: verify this in a text input;
+        window.onkeydown = '';
+
+
+        this.forceUpdateScreen();
     }
-}
+};

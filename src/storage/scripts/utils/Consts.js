@@ -6,6 +6,12 @@ export default class Consts {
         maximized: 1
     };
 
+    static windowInstanceSize = {
+        // Approximation
+        height: 500,
+        width: 650
+    }
+
     static instanceType = {
         App: "App",
         Directory: "Directory"

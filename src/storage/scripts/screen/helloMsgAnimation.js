@@ -3,7 +3,7 @@ import Consts from "../utils/Consts";
 export default function ApplyTypingAnimation() {
     const target = document.querySelector('p[data-select="welcomeMsg"] span[data-select="targetMsg"]');
     // Start recursive loop
-    AppendText('', 'Hello', target);
+    AppendText('', 'Hello world!', target);
 }
 
 function AppendText(currentText, targetText, targetObject) {
@@ -17,8 +17,9 @@ function AppendText(currentText, targetText, targetObject) {
                 AppendText(nextText, targetText, targetObject);
             else {
                 // Show the 'press to continue' element
-                document.querySelector('p[data-select="continueMsg"]').setAttribute('data-visible', true);
-                window.sessionStorage.setItem('canContinue', true);
+                let continueMsg = document.querySelector('p[data-select="continueMsg"]');
+                if(continueMsg)
+                    continueMsg.setAttribute('data-visible', true);
             }
         }
     }, Consts.helloMessageTickSpeed);

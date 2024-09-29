@@ -8,26 +8,16 @@ import TaskbarAppInstance from './TaskbarAppInstance.js';
 export default class Taskbar extends React.Component {
     constructor(props) {
         super(props);
+        this.appUtils = props.appUtils;
 
-        this.getAppData = props.getAppData;
-        this.setAppData = props.setAppData;
-
-        this.forceUpdateApp = props.forceUpdateApp;
         this.forceUpdateTaskbar = this.forceUpdateTaskbar.bind(this);
     }
     render() {
         return (<section
             id={styles.taskBar}
             onClick={(e) => {
-                const appData = this.getAppData();
-                this.setAppData({
-                    ...appData,
-                    taskbar: {
-                        ...appData.taskbar,
-                        activeContext: null
-                    }
-                });
-                this.forceUpdateApp();
+                this.appUtils.removeTaskbarContextMenu();
+                this.appUtils.forceUpdateApp();
             }}>
             <OSLogo
                 className={`${styles.interactiveTile}`}
@@ -44,13 +34,11 @@ export default class Taskbar extends React.Component {
     }
 
     RenderOpenInstanceWindows() {
-        const appInstances = this.getAppData().appInstances;
+        const appInstances = this.appUtils.getAppData().instances.entries;
         return (<>{appInstances.map((appInstance, iteration) => {
             return <TaskbarAppInstance
                 forceUpdateTaskbar={this.forceUpdateTaskbar}
-                getAppData={this.getAppData}
-                setAppData={this.setAppData}
-                forceUpdateApp={this.forceUpdateApp}
+                appUtils={this.appUtils}
                 key={`taskBarAppInstance_key_${appInstance.id}`}
                 id={appInstance.id}
                 name={appInstance.name}

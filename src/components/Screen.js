@@ -8,44 +8,30 @@ export default class Screen extends React.Component {
     constructor(props) {
         super(props)
 
-        this.getAppData = props.getAppData;
-        this.setAppData = props.setAppData;
-        this.forceUpdateApp = props.forceUpdateApp;
-
-        this.screenData = {
-            screenOn: updateMessageCookieState()
-        };
+        this.appUtils = props.appUtils;
+        this.forceUpdateScreen = this.forceUpdateScreen.bind(this);
     }
 
-    setScreenData(value) {
-        this.screenData = value;
+    forceUpdateScreen() {
+        this.forceUpdate();
     }
 
     render() {
-        const renderScreen = {
-            false: <WelcomeMessage toggleScreenData={this.setScreenData} />,
-            true: <DesktopSystem forceUpdateApp={this.forceUpdateApp} setAppData={this.setAppData} getAppData={this.getAppData} />
-        };
-
         return (<>
             <section id={styles.screen}>
-                {renderScreen[this.screenData.screenOn]}
+                {
+                    this.shouldShowWelcomeMessage() ?
+                        <WelcomeMessage
+                            forceUpdateScreen={this.forceUpdateScreen} /> :
+                        <DesktopSystem
+                            appUtils={this.appUtils}
+                        />}
             </section>
         </>);
     }
-};
 
-function updateMessageCookieState() {
-    let cookieValue = getCookie('welcomeMessage');
-    // Get the state
-    if (cookieValue != 'true') {
-        // Update if expired
-        let expiringDay = new Date();
-        expiringDay.setMonth(expiringDay.getMonth() + 1)
-        expiringDay = new Date(expiringDay).toUTCString();
 
-        setCookie('welcomeMessage', 'true', expiringDay)
-        return false;
+    shouldShowWelcomeMessage() {
+        return getCookie('welcomeMessage') != 'true'
     }
-    return true;
-}
+};
