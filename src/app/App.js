@@ -8,7 +8,10 @@ export default class App extends React.Component {
         this.appData = {
             // Array of instances of AppWindow
             appInstances: [],
-            activeInstanceId: null
+            activeInstanceId: null,
+            taskbar: {
+                activeContext: null
+            }
         };
 
         // Bind references to parent as they will be called from another instance
@@ -31,8 +34,14 @@ export default class App extends React.Component {
 
     render() {
         return (<>
-            <Screen forceUpdateApp={this.forceUpdateApp} setAppData={this.setAppData} getAppData={this.getAppData} />
-            <Taskbar forceUpdateApp={this.forceUpdateApp} setAppData={this.setAppData} getAppData={this.getAppData} />
+            <Screen
+                forceUpdateApp={this.forceUpdateApp}
+                setAppData={this.setAppData}
+                getAppData={this.getAppData} />
+            <Taskbar
+                forceUpdateApp={this.forceUpdateApp}
+                setAppData={this.setAppData}
+                getAppData={this.getAppData} />
         </>);
     }
 }

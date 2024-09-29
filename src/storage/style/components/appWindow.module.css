@@ -2,6 +2,7 @@
     --border-blue-0: #416dba;
     --border-blue-1: #1d3d9c;
     --border-blue-2: #13346d;
+    --border-blue-3: #24263d; 
     
     --dark-gray-0: #1c1d26;
     --dark-gray-1: #1d1e2e; 
@@ -10,28 +11,25 @@
     --dark-gray-0-hover: #2f3253;
 
     --light-gray-0: #aba485;
+    --light-gray-1: #d4e4ff;
 
     --menu-bar-height: 2rem;
 }
 
 .appInstanceWindow {
-    min-width: min(50vh, 50vw);
-    min-height: calc(.8 * min(50vh, 50vw));
-    aspect-ratio: 1.25;
-    border: 2px solid var(--border-blue-0);
+    min-width: min(80vh, 80vw);
+    min-height: calc(.8 * min(80vh, 80vw));
+    aspect-ratio: 1.5;
+    border: 2px solid var(--border-blue-2);
     border-top: none;
     position: absolute;
     resize: both;
     overflow: hidden;
 }
 
-.appInstanceWindow[class*="active"] {
-    border: 2px solid var(--border-blue-1);
-    border-top: none;
-}
-
 .appMenuBar {
-    background-color: var(--border-blue-0);
+    background-color: var(--border-blue-2);
+    color:white;
     width: 100%;
     height: var(--menu-bar-height);
     display: flex;
@@ -39,8 +37,13 @@
     align-items: center;
 }
 
+.appInstanceWindow[class*="active"] {
+    border: 2px solid var(--border-blue-3);
+    border-top: none;
+}
+
 .appInstanceWindow[class*="active"] .appMenuBar {
-    background-color: var(--border-blue-1);
+    background-color: var(--border-blue-3);
 }
 
 .appMenuBar p {
@@ -77,12 +80,15 @@
 }
 
 .appMenuBar div>div:hover {
+    background-color: var(--border-blue-0);
+}
+
+.appInstanceWindow[class*="active"] .appMenuBar div>div:hover {
     background-color: var(--border-blue-2);
 }
 
 .appContent {
-    /* TODO */
-    /* background-color: var(--dark-gray-0); */
+    background-color: var(--light-gray-1);
     width: 100%;
     height: calc(100% - var(--menu-bar-height));
 }
