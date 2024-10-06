@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/portfolio_v2/static/css/main.47a2962b.css",
-    "main.js": "/portfolio_v2/static/js/main.f7940a47.js",
-    "static/media/wallpaper_Xlarge.jpg": "/portfolio_v2/static/media/wallpaper_Xlarge.cbdc673e4531d5dd5f37.jpg",
-    "static/media/settings.svg": "/portfolio_v2/static/media/settings.be4c2d2901fca851ba33f0f61c539aee.svg",
-    "static/media/info.svg": "/portfolio_v2/static/media/info.1a4075a310ccc82ef657d2a0e03d73f6.svg",
-    "static/media/trash.svg": "/portfolio_v2/static/media/trash.a582070775d6802d74f921e88d7f6c9d.svg",
-    "static/media/history.svg": "/portfolio_v2/static/media/history.ff04db95c58a40aa506aca9b71b0aa2d.svg",
-    "static/media/mail.svg": "/portfolio_v2/static/media/mail.f85a8a44b8992ffd0967d93bf78e7e46.svg",
-    "index.html": "/portfolio_v2/index.html",
-    "static/media/linkedin.svg": "/portfolio_v2/static/media/linkedin.6697b392ef9ac49fe23a2c6b7bcc2c2f.svg",
-    "static/media/directory.svg": "/portfolio_v2/static/media/directory.4675c9db60bbda28728aa4ed7ec2c5a4.svg",
-    "static/media/os.svg": "/portfolio_v2/static/media/os.1689f993c42f12c917e4cf0531312b46.svg",
-    "main.47a2962b.css.map": "/portfolio_v2/static/css/main.47a2962b.css.map",
-    "main.f7940a47.js.map": "/portfolio_v2/static/js/main.f7940a47.js.map"
+    "main.css": "/static/css/main.763db058.css",
+    "main.js": "/static/js/main.ee6fbac4.js",
+    "static/media/wallpaper_Xlarge.jpg": "/static/media/wallpaper_Xlarge.cbdc673e4531d5dd5f37.jpg",
+    "static/media/settings.svg": "/static/media/settings.be4c2d2901fca851ba33f0f61c539aee.svg",
+    "static/media/info.svg": "/static/media/info.1a4075a310ccc82ef657d2a0e03d73f6.svg",
+    "static/media/trash.svg": "/static/media/trash.a582070775d6802d74f921e88d7f6c9d.svg",
+    "static/media/history.svg": "/static/media/history.ff04db95c58a40aa506aca9b71b0aa2d.svg",
+    "static/media/mail.svg": "/static/media/mail.f85a8a44b8992ffd0967d93bf78e7e46.svg",
+    "index.html": "/index.html",
+    "static/media/linkedin.svg": "/static/media/linkedin.6697b392ef9ac49fe23a2c6b7bcc2c2f.svg",
+    "static/media/directory.svg": "/static/media/directory.4675c9db60bbda28728aa4ed7ec2c5a4.svg",
+    "static/media/os.svg": "/static/media/os.1689f993c42f12c917e4cf0531312b46.svg",
+    "main.763db058.css.map": "/static/css/main.763db058.css.map",
+    "main.ee6fbac4.js.map": "/static/js/main.ee6fbac4.js.map"
   },
   "entrypoints": [
-    "static/css/main.47a2962b.css",
-    "static/js/main.f7940a47.js"
+    "static/css/main.763db058.css",
+    "static/js/main.ee6fbac4.js"
   ]
 }
