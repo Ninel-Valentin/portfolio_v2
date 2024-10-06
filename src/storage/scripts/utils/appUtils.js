@@ -1,3 +1,4 @@
+import Consts from "./Consts";
 import utils from "./utils";
 
 export default class appUtils {
@@ -12,6 +13,45 @@ export default class appUtils {
 
     isIdActive(idToCheck) {
         return this.getActiveInstanceId() == idToCheck;
+    }
+
+    createWindowInstance(name, appName, src = null) {
+        let id = this.getNextInstanceId();
+
+        this.addInstance({
+            type: appName.includes('App') ? Consts.instanceType.App : Consts.instanceType.Directory,
+            id,
+            name,
+            src
+        });
+        return id;
+    }
+
+    /**
+     * Checks for the instanceName, if it exists, it will be focused, else create it
+     */
+    enableWindowInstance(instanceName, appName, src = null) {
+        if (!instanceName) return;
+
+        const appData = this.getAppData();
+        const appInstances = appData.instances.entries;
+
+        let instance = appInstances.find(appInstance => appInstance.name == instanceName);
+        var instanceId;
+        if (instance) {
+            // if it exists, focus on it
+            instanceId = instance.id;
+            if (this.getMinimizedStatus(instanceId))
+                this.windowActionToggleMinimize(instanceId);
+            // Set active instanceId
+            this.setHighestZIndex(instanceId);
+        }
+        else
+            // Open app window / directory
+            instanceId = this.createWindowInstance(instanceName, appName, src)
+
+        this.setActiveInstanceId(instanceId);
+        this.forceUpdateApp();
     }
 
     addInstance(appInstanceToAdd) {
@@ -33,7 +73,7 @@ export default class appUtils {
         });
     }
 
-    removeInstance(appInstanceName) {
+    removeInstance(instanceId) {
         const appData = this.getAppData();
         const appInstances = appData.instances.entries;
 
@@ -42,7 +82,7 @@ export default class appUtils {
             ...appData,
             instances: {
                 ...appData.instances,
-                entries: appInstances.filter(appInstance => appInstance.name != appInstanceName)
+                entries: appInstances.filter(appInstance => appInstance.id != instanceId)
             }
         });
     }
@@ -153,7 +193,7 @@ export default class appUtils {
         const instance = this.getInstanceWithId(instanceId);
         if (!instance)
             console.log(`No instance found for ${instanceId}`);
-        
+
         return instance?.isMinimized;
     }
 
@@ -178,22 +218,47 @@ export default class appUtils {
     }
 
     toggleInstanceMaximizedStatus(instanceIdToModify) {
-        const appData = this.getAppData();
-        const appInstances = appData.instances.entries;
+        // const appData = this.getAppData();
+        // const appInstances = appData.instances.entries;
 
-        // const currentInstance = this.getInstanceWithId(instanceIdToModify);
-        for (let appInstance of appInstances)
-            if (appInstance.id == instanceIdToModify) {
-                appInstance.isMaximized = !appInstance.isMaximized;
-                break;
-            }
+        // // const currentInstance = this.getInstanceWithId(instanceIdToModify);
+        // for (let appInstance of appInstances)
+        //     if (appInstance.id == instanceIdToModify) {
+        //         appInstance.isMaximized = !appInstance.isMaximized;
+        //         break;
+        //     }
 
-        this.setAppData({
-            ...appData,
-            instances: {
-                ...appData.instances,
-                entries: appInstances
-            }
-        });
+        // this.setAppData({
+        //     ...appData,
+        //     instances: {
+        //         ...appData.instances,
+        //         entries: appInstances
+        //     }
+        // });
     }
+
+
+    // Actions
+    windowActionToggleMinimize(instanceId) {
+        this.toggleInstanceMinimizedStatus(instanceId);
+        if (this.getMinimizedStatus(instanceId))
+            utils.applyMinimizeAnimation(instanceId);
+        else
+            utils.applyRestoreAnimation(instanceId);
+
+        setTimeout(() => {
+            this.forceUpdateApp();
+        }, Consts.minimizeAnimationDuration * .9);
+    }
+
+    windowActionToggleMaximize(instanceId) {
+        this.toggleInstanceMaximizedStatus(instanceId);
+        this.forceUpdateApp();
+    }
+
+    windowActionClose(instanceId) {
+        this.removeInstance(instanceId);
+        this.forceUpdateApp();
+    }
+
 }

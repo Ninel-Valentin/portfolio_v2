@@ -18,13 +18,12 @@ export default class TaskbarAppInstance extends React.Component {
     render() {
         return (<div
             onClick={(e) => {
-                let instanceId = this.id;
-                if (this.appUtils.getMinimizedStatus(instanceId) || this.appUtils.isIdActive(this.id)) {
-                    this.windowActionToggleMinimize()
+                if (this.appUtils.getMinimizedStatus(this.id) || this.appUtils.isIdActive(this.id)) {
+                    this.appUtils.windowActionToggleMinimize(this.id)
                 }
                 if (!this.appUtils.isIdActive(this.id)) {
-                    this.appUtils.setHighestZIndex(instanceId);
-                    this.appUtils.setActiveInstanceId(instanceId);
+                    this.appUtils.setHighestZIndex(this.id);
+                    this.appUtils.setActiveInstanceId(this.id);
                 }
                 this.forceUpdateTaskbar();
                 e.stopPropagation();
@@ -54,19 +53,10 @@ export default class TaskbarAppInstance extends React.Component {
                 name={this.name}
                 id={this.id}
                 appUtils={this.appUtils}
+                forceUpdateTaskbar={this.forceUpdateTaskbar}
                 windowActionToggleMinimize={this.windowActionToggleMinimize} />)
             : null;
     }
 
-    windowActionToggleMinimize() {
-        this.appUtils.toggleInstanceMinimizedStatus(this.id);
-        if (this.appUtils.getMinimizedStatus(this.id))
-            utils.applyMinimizeAnimation(this.id);
-        else
-            utils.applyRestoreAnimation(this.id);
 
-        setTimeout(() => {
-            this.appUtils.forceUpdateApp();
-        }, Consts.minimizeAnimationDuration * .9);
-    }
 }

@@ -29,7 +29,6 @@ export default class DefaultInstanceWindow extends React.Component {
         this.appUtils = props.appUtils;
         this.render = this.render.bind(this);
         // Parent functions
-        this.closeWindowFunction = props.closeWindowFunction;
         this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
     }
 
@@ -98,20 +97,20 @@ export default class DefaultInstanceWindow extends React.Component {
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
                     // Set state minimized
-                    this.windowActionToggleMinimize();
+                    this.appUtils.windowActionToggleMinimize(this.id);
                 }}
             > _ </div>
             <div
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
                     // Set state restored/maximized
-                    this.windowActionToggleMaximize();
+                    this.appUtils.windowActionToggleMaximize(this.id);
                 }}
             > ◱ </div>
             <div
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
-                    this.windowActionClose();
+                    this.appUtils.windowActionClose(this.id);
                 }}
             > ⨉ </div>
         </>);
@@ -142,25 +141,6 @@ export default class DefaultInstanceWindow extends React.Component {
         const currentStyle = windowNode.getAttribute('style');
         const updatedStyle = currentStyle.replace(/left:.*?;/, `left:${targetX}px;`).replace(/top:.*?;/, `top: ${this.position.y}px;`);
         windowNode.setAttribute('style', updatedStyle);
-    }
-
-    windowActionToggleMinimize() {
-        this.appUtils.toggleInstanceMinimizedStatus(this.id);
-        utils.applyMinimizeAnimation(this.id);
-
-        setTimeout(() => {
-            this.appUtils.forceUpdateApp();
-        }, Consts.minimizeAnimationDuration * .9);
-    }
-
-    windowActionToggleMaximize() {
-        this.appUtils.toggleInstanceMaximizedStatus(this.id);
-        this.appUtils.forceUpdateApp();
-    }
-
-    windowActionClose() {
-        this.closeWindowFunction(this.name)
-        this.appUtils.forceUpdateApp();
     }
 }
 

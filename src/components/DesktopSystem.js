@@ -14,11 +14,6 @@ export default class DesktopSystem extends React.Component {
         this.appOffset = 50;
 
         this.appUtils = props.appUtils;
-
-        // Bind the methods to the DesktopSystem instance
-        this.enableWindowInstance = this.enableWindowInstance.bind(this);
-        this.closeInstance = this.closeInstance.bind(this);
-        this.createWindowInstance = this.createWindowInstance.bind(this);
     }
 
     render() {
@@ -42,71 +37,17 @@ export default class DesktopSystem extends React.Component {
         return { x, y };
     }
 
-    /**
-     * Checks for the instanceName, if it exists, it will be focused, else create it
-     */
-    enableWindowInstance(instanceName, appName, src = null) {
-        if (!instanceName) return;
-
-        const appData = this.appUtils.getAppData();
-        const appInstances = appData.instances.entries;
-
-        let instance = appInstances.find(appInstance => appInstance.name == instanceName);
-        var instanceId;
-        if (instance) {
-            // if it exists, focus on it
-            instanceId = instance.id;
-            if (this.appUtils.getMinimizedStatus(instanceId))
-                this.windowActionToggleMinimize(instanceId);
-            // Set active instanceId
-            this.appUtils.setHighestZIndex(instanceId);
-        }
-        else
-            // Open app window / directory
-            instanceId = this.createWindowInstance(instanceName, appName, src)
-
-        this.appUtils.setActiveInstanceId(instanceId);
-        this.appUtils.forceUpdateApp();
-    }
-
-    windowActionToggleMinimize(instanceId) {
-        this.appUtils.toggleInstanceMinimizedStatus(instanceId);
-        utils.applyRestoreAnimation(instanceId);
-
-        setTimeout(() => {
-            this.appUtils.forceUpdateApp();
-        }, Consts.minimizeAnimationDuration * .9);
-    }
-
-    createWindowInstance(name, appName, src = null) {
-        let id = this.appUtils.getNextInstanceId();
-
-        this.appUtils.addInstance({
-            type: appName.includes('App') ? Consts.instanceType.App : Consts.instanceType.Directory,
-            id,
-            name,
-            src
-        });
-        return id;
-    }
-
-    closeInstance(instanceName) {
-        if (!instanceName) return;
-
-        this.appUtils.removeInstance(instanceName);
-    }
-
     RenderDesktopIcons() {
         return (<>
             {/* TODO: https://www.linkedin.com/badges/profile/create?vanityname=ninel-valentin-banica&preferredlocale=en_US&trk=public_profile-settings_badge */}
-            {/* <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} src="https://www.linkedin.com/in/ninel-valentin-banica/" name="linkedin" /> */}
-            <DirectoryInstanceIcon enableWindowFunction={this.enableWindowInstance} name="contact" />
-            <DirectoryInstanceIcon enableWindowFunction={this.enableWindowInstance} name="projects" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="history" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="mail" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="info" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="settings" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="recycle bin" />
+            {/* <AppInstanceIcon appUtils={this.appUtils} src="https://www.linkedin.com/in/ninel-valentin-banica/" name="linkedin" /> */}
+            <DirectoryInstanceIcon appUtils={this.appUtils} name="contact" />
+            <DirectoryInstanceIcon appUtils={this.appUtils} name="projects" />
+            <AppInstanceIcon appUtils={this.appUtils} name="history" />
+            <AppInstanceIcon appUtils={this.appUtils} name="mail" />
+            <AppInstanceIcon appUtils={this.appUtils} name="info" />
+            <AppInstanceIcon appUtils={this.appUtils} name="settings" />
+            <AppInstanceIcon appUtils={this.appUtils} name="recycle bin" />
         </>);
     }
 
@@ -118,7 +59,6 @@ export default class DesktopSystem extends React.Component {
                 case Consts.instanceType.App:
                     return <AppInstanceWindow
                         appUtils={this.appUtils}
-                        closeWindowFunction={this.closeInstance}
                         position={position}
                         name={appInstance.name}
                         id={appInstance.id}
@@ -127,7 +67,6 @@ export default class DesktopSystem extends React.Component {
                 case Consts.instanceType.Directory:
                     return <DirectoryInstanceWindow
                         appUtils={this.appUtils}
-                        closeWindowFunction={this.closeInstance}
                         position={position}
                         name={appInstance.name}
                         id={appInstance.id}

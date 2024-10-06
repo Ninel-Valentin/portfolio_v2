@@ -9,7 +9,7 @@ export default class DefaultInstanceIcon extends React.Component {
 
         this.name = props.name;
         this.src = props.src || null;
-        this.enableWindowFunction = props.enableWindowFunction
+        this.appUtils = props.appUtils;
     }
 
     render() {
@@ -17,7 +17,7 @@ export default class DefaultInstanceIcon extends React.Component {
             <section
                 className={`${styles.windowIcon} unselectable`}
                 onClick={(e) => {
-                    this.enableWindowFunction(this.name, this.constructorName, this.src)
+                    this.appUtils.enableWindowInstance(this.name, this.constructorName, this.src)
                 }}
             >
                 {reactUtils.loadDisplayIcon(this.name)}
