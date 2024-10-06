@@ -18,7 +18,21 @@ export default class Screen extends React.Component {
 
     render() {
         return (<>
-            <section id={styles.screen}>
+            <section id={styles.screen}
+                onClick={(e) => {
+                    const data = this.appUtils.getAppData();
+                    if (data.taskbar.activeContext != null) {
+                        this.appUtils.setAppData({
+                            ...data,
+                            taskbar: {
+                                ...data.taskbar,
+                                activeContext: null
+                            }
+                        });
+                        this.appUtils.forceUpdateApp();
+                    }
+                }}
+            >
                 {
                     this.shouldShowWelcomeMessage() ?
                         <WelcomeMessage

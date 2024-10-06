@@ -56,6 +56,8 @@ export default class DesktopSystem extends React.Component {
         if (instance) {
             // if it exists, focus on it
             instanceId = instance.id;
+            if (this.appUtils.getMinimizedStatus(instanceId))
+                this.windowActionToggleMinimize(instanceId);
             // Set active instanceId
             this.appUtils.setHighestZIndex(instanceId);
         }
@@ -67,10 +69,19 @@ export default class DesktopSystem extends React.Component {
         this.appUtils.forceUpdateApp();
     }
 
+    windowActionToggleMinimize(instanceId) {
+        this.appUtils.toggleInstanceMinimizedStatus(instanceId);
+        utils.applyRestoreAnimation(instanceId);
+
+        setTimeout(() => {
+            this.appUtils.forceUpdateApp();
+        }, Consts.minimizeAnimationDuration * .9);
+    }
+
     createWindowInstance(name, appName, src = null) {
         let id = this.appUtils.getNextInstanceId();
 
-        this.appUtils.addNewInstance({
+        this.appUtils.addInstance({
             type: appName.includes('App') ? Consts.instanceType.App : Consts.instanceType.Directory,
             id,
             name,
@@ -83,17 +94,17 @@ export default class DesktopSystem extends React.Component {
         if (!instanceName) return;
 
         this.appUtils.removeInstance(instanceName);
-        this.appUtils.forceUpdateApp()
     }
 
     RenderDesktopIcons() {
         return (<>
             {/* TODO: https://www.linkedin.com/badges/profile/create?vanityname=ninel-valentin-banica&preferredlocale=en_US&trk=public_profile-settings_badge */}
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} src="https://www.linkedin.com/in/ninel-valentin-banica/" name="linkedin" />
+            {/* <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} src="https://www.linkedin.com/in/ninel-valentin-banica/" name="linkedin" /> */}
+            <DirectoryInstanceIcon enableWindowFunction={this.enableWindowInstance} name="contact" />
             <DirectoryInstanceIcon enableWindowFunction={this.enableWindowInstance} name="projects" />
             <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="history" />
-            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="info" />
             <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="mail" />
+            <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="info" />
             <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="settings" />
             <AppInstanceIcon enableWindowFunction={this.enableWindowInstance} name="recycle bin" />
         </>);
@@ -122,7 +133,6 @@ export default class DesktopSystem extends React.Component {
                         id={appInstance.id}
                         key={`appInstanceWindow_key_${appInstance.id}`} />
             }
-
         })}</>)
     }
 };

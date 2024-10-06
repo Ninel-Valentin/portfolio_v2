@@ -16,6 +16,7 @@ export default class Taskbar extends React.Component {
         return (<section
             id={styles.taskBar}
             onClick={(e) => {
+                // Need this to prevent the propagation from apps
                 this.appUtils.removeTaskbarContextMenu();
                 this.appUtils.forceUpdateApp();
             }}>

@@ -12,6 +12,6 @@ main {
     flex-wrap: wrap;
     row-gap: var(--desktop-icons-row-gap);
     column-gap: var(--desktop-icons-col-gap);
-    justify-content: space-around;
+    justify-content: flex-start;
     padding: var(--desktop-icons-row-gap) var(--desktop-icons-col-gap);
 }

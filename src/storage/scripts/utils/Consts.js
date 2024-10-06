@@ -1,10 +1,6 @@
 export default class Consts {
     static helloMessageTickSpeed = 150;
-    static windowSizeState = {
-        minimized: -1,
-        normal: 0,
-        maximized: 1
-    };
+    static minimizeAnimationDuration = 200;
 
     static windowInstanceSize = {
         // Approximation
@@ -22,6 +18,7 @@ export default class Consts {
             "linkedin": "linkedin",
             "directory": "directory",
             "projects": "directory",
+            "contact": "directory",
             "history": "history",
             "info": "info",
             "mail": "mail",
@@ -31,6 +28,7 @@ export default class Consts {
         title: {
             "linkedin": "LinkedIn",
             "projects": "Projects",
+            "contact": "Contact",
             "history": "History",
             "info": "Info",
             "mail": "Mail",

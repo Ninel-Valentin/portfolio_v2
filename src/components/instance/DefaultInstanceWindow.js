@@ -14,7 +14,6 @@ export default class DefaultInstanceWindow extends React.Component {
         this.src = props.src;
 
         this.active = props.active;
-        this.windowSizeState = Consts.windowSizeState.normal;
 
         this.isBeingMoved = false;
         this.difference = {
@@ -36,7 +35,7 @@ export default class DefaultInstanceWindow extends React.Component {
 
     render() {
         window.addEventListener('mousemove', (e) => {
-            if (this.isBeingMoved) {
+            if (this.isBeingMoved && !this.appUtils.getMinimizedStatus(this.id)) {
                 this.MoveToTarget(e);
             }
         });
@@ -59,6 +58,7 @@ export default class DefaultInstanceWindow extends React.Component {
                     }
                 }}
                 style={{
+                    display: this.appUtils.getMinimizedStatus(this.id) ? 'none' : 'block',
                     left: this.position.x,
                     top: this.position.y,
                     zIndex: this.appUtils.getZIndex(this.id) || 0
@@ -97,24 +97,21 @@ export default class DefaultInstanceWindow extends React.Component {
             <div
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
-                    e.stopPropagation(); // Needed to not pass the event to parent window
-
                     // Set state minimized
+                    this.windowActionToggleMinimize();
                 }}
             > _ </div>
             <div
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
-                    e.stopPropagation(); // Needed to not pass the event to parent window
-
-                    // Set state maximized
+                    // Set state restored/maximized
+                    this.windowActionToggleMaximize();
                 }}
-            > □ </div>
+            > ◱ </div>
             <div
                 onMouseDown={(e) => {
                     this.isBeingMoved = false;
-                    this.closeWindowFunction(this.name)
-                    e.stopPropagation(); // Needed to not pass the event to parent window
+                    this.windowActionClose();
                 }}
             > ⨉ </div>
         </>);
@@ -145,6 +142,25 @@ export default class DefaultInstanceWindow extends React.Component {
         const currentStyle = windowNode.getAttribute('style');
         const updatedStyle = currentStyle.replace(/left:.*?;/, `left:${targetX}px;`).replace(/top:.*?;/, `top: ${this.position.y}px;`);
         windowNode.setAttribute('style', updatedStyle);
+    }
+
+    windowActionToggleMinimize() {
+        this.appUtils.toggleInstanceMinimizedStatus(this.id);
+        utils.applyMinimizeAnimation(this.id);
+
+        setTimeout(() => {
+            this.appUtils.forceUpdateApp();
+        }, Consts.minimizeAnimationDuration * .9);
+    }
+
+    windowActionToggleMaximize() {
+        this.appUtils.toggleInstanceMaximizedStatus(this.id);
+        this.appUtils.forceUpdateApp();
+    }
+
+    windowActionClose() {
+        this.closeWindowFunction(this.name)
+        this.appUtils.forceUpdateApp();
     }
 }
 

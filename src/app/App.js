@@ -9,14 +9,16 @@ export default class App extends React.Component {
         this.appData = {
             // Array of instances of AppWindow
             instances: {
-                entries: [],
-                /** JSON Schema
+                /** entries JSON Schema
                  * type: Consts.instanceType[App/Directory]
                  * id: String
                  * name: String
                  * src: String/null
                  * zIndex: number
-                 */
+                 * isMinimized: bool - minimized or shown on the screen
+                 * isMaximized: bool - fullscreen or normal size
+                */
+                entries: [],
                 activeId: null
             },
             taskbar: {

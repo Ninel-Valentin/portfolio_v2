@@ -14,12 +14,14 @@ export default class appUtils {
         return this.getActiveInstanceId() == idToCheck;
     }
 
-    addNewInstance(appInstanceToAdd) {
+    addInstance(appInstanceToAdd) {
         const appData = this.getAppData();
         const appInstances = appData.instances.entries;
         appInstances.push({
             ...appInstanceToAdd,
             zIndex: this.getHighestZIndex() + 1,
+            isMinimized: false,
+            isMaximized: false
         });
 
         this.setAppData({
@@ -91,7 +93,7 @@ export default class appUtils {
                 }
 
                 // Apply for both cases above
-                if (shouldUpdate){
+                if (shouldUpdate) {
                     utils.applyZIndexChange(appInstance.id, appInstance.zIndex);
                 }
             }
@@ -112,7 +114,7 @@ export default class appUtils {
         return highestZIndex;
     }
 
-    getZIndex(instanceId){
+    getZIndex(instanceId) {
         return this.getInstanceWithId(instanceId).zIndex;
     }
 
@@ -143,6 +145,54 @@ export default class appUtils {
             taskbar: {
                 ...appData.taskbar,
                 activeContext: null
+            }
+        });
+    }
+
+    getMinimizedStatus(instanceId) {
+        const instance = this.getInstanceWithId(instanceId);
+        if (!instance)
+            console.log(`No instance found for ${instanceId}`);
+        
+        return instance?.isMinimized;
+    }
+
+    toggleInstanceMinimizedStatus(instanceIdToModify) {
+        const appData = this.getAppData();
+        const appInstances = appData.instances.entries;
+
+        // const currentInstance = this.getInstanceWithId(instanceIdToModify);
+        for (let appInstance of appInstances)
+            if (appInstance.id == instanceIdToModify) {
+                appInstance.isMinimized = !appInstance.isMinimized;
+                break;
+            }
+
+        this.setAppData({
+            ...appData,
+            instances: {
+                ...appData.instances,
+                entries: appInstances
+            }
+        });
+    }
+
+    toggleInstanceMaximizedStatus(instanceIdToModify) {
+        const appData = this.getAppData();
+        const appInstances = appData.instances.entries;
+
+        // const currentInstance = this.getInstanceWithId(instanceIdToModify);
+        for (let appInstance of appInstances)
+            if (appInstance.id == instanceIdToModify) {
+                appInstance.isMaximized = !appInstance.isMaximized;
+                break;
+            }
+
+        this.setAppData({
+            ...appData,
+            instances: {
+                ...appData.instances,
+                entries: appInstances
             }
         });
     }
