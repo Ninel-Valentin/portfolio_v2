@@ -1,4 +1,4 @@
-import styles from '../../storage/style/components/taskbar.module.css';
+import styles from '../../storage/style/taskbar/taskbar.module.css';
 import React from "react";
 
 export default class TaskbarTooltipMenu extends React.Component {

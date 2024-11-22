@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../../storage/style/components/appWindow.module.css'
+import styles from '../../storage/style/instance/appWindow.module.css'
 import Consts from '../../storage/scripts/utils/Consts.js'
 import utils from '../../storage/scripts/utils/utils.js';
 import reactUtils from '../../storage/scripts/utils/reactUtils.js';
@@ -12,16 +12,13 @@ export default class DefaultInstanceWindow extends React.Component {
         this.id = props.id;
         this.name = props.name;
         this.src = props.src;
+        this.instanceType = props.instanceType;
 
         this.active = props.active;
+        this.position = props.position;
 
         this.isBeingMoved = false;
         this.difference = {
-            x: 0,
-            y: 0
-        };
-
-        this.position = props.position || {
             x: 0,
             y: 0
         };
@@ -30,6 +27,8 @@ export default class DefaultInstanceWindow extends React.Component {
         this.render = this.render.bind(this);
         // Parent functions
         this.RenderMenuBarButtons = this.RenderMenuBarButtons.bind(this);
+
+        this.loadContent = props.loadContent;
     }
 
     render() {
@@ -42,10 +41,16 @@ export default class DefaultInstanceWindow extends React.Component {
             this.isBeingMoved = false;
         });
 
+        let className = `${styles.appInstanceWindow} unselectable`;
+        if (this.appUtils.isIdActive(this.id))
+            className += ' active';
+        if (this.appUtils.getInstanceWithId(this.id).isResizable)
+            className += ' resizeable';
+
         return (<>
             <div
                 data-select={`appInstanceWindow_${this.id}`}
-                className={`${styles.appInstanceWindow} unselectable${this.appUtils.isIdActive(this.id) ? ' active' : ''}`}
+                className={className}
                 onMouseDown={(e) => {
                     // Don't handle click if the target is a menu bar button
                     if (e.target.className) {
@@ -71,21 +76,17 @@ export default class DefaultInstanceWindow extends React.Component {
                     <p>
                         <span className={styles.appMenuBarIcon}>
                             {reactUtils.loadDisplayIcon(
-                                Consts.applications.name[this.name]
+                                Consts.applications.type[this.name]
                             )}
                         </span>
                         {Consts.applications.title[this.name]}
                     </p>
                     <div>
-                        {this.RenderMenuBarButtons()}
+                        {this.RenderMenuBarButtons && this.RenderMenuBarButtons()}
                     </div>
                 </section>
-                <section className={styles.appContent}>
-                    <iframe
-                        className={styles.inactiveFrame}
-                        src={this.src}
-                        allowFullScreen={true}
-                    ></iframe>
+                <section className={`${styles.appContent}${this.instanceType == Consts.instanceType.Directory ? ' directoryDisplay' : ''}`}>
+                    {this.loadContent && this.loadContent()}
                 </section>
             </div>
         </>);
@@ -138,9 +139,13 @@ export default class DefaultInstanceWindow extends React.Component {
         };
 
         const windowNode = document.querySelector(`div[data-select="appInstanceWindow_${this.id}"]`);
-        const currentStyle = windowNode.getAttribute('style');
-        const updatedStyle = currentStyle.replace(/left:.*?;/, `left:${targetX}px;`).replace(/top:.*?;/, `top: ${this.position.y}px;`);
-        windowNode.setAttribute('style', updatedStyle);
+        if (windowNode) {
+            const currentStyle = windowNode.getAttribute('style');
+            const updatedStyle = currentStyle.replace(/left:.*?;/, `left:${targetX}px;`).replace(/top:.*?;/, `top: ${this.position.y}px;`);
+            windowNode.setAttribute('style', updatedStyle);
+        }
+        else
+            console.error(`[f:MoveToTarget] -> ${this.id} instance window could not be found!`);
     }
 }
 

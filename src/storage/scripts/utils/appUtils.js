@@ -60,6 +60,7 @@ export default class appUtils {
         appInstances.push({
             ...appInstanceToAdd,
             zIndex: this.getHighestZIndex() + 1,
+            isResizable: true,
             isMinimized: false,
             isMaximized: false
         });
@@ -259,6 +260,23 @@ export default class appUtils {
     windowActionClose(instanceId) {
         this.removeInstance(instanceId);
         this.forceUpdateApp();
+    }
+
+    getActiveHistoryId() {
+        return this.getAppData().content.history.activeId;
+    }
+
+    setActiveHistoryId(instanceId) {
+        const appData = this.getAppData();
+        this.setAppData({
+            ...appData,
+            content: {
+                ...appData.content,
+                history: {
+                    activeId: instanceId
+                }
+            }
+        });
     }
 
 }

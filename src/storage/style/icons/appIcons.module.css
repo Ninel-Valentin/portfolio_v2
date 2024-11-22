@@ -1,0 +1,59 @@
+:root {
+    --windowIcon_height: calc(1 * var(--windowIcon_width));
+    --windowIcon_display_size: calc(.8 * var(--windowIcon_width));
+}
+
+@media only screen and (max-width: 600px) {
+    :root {
+        --windowIcon_font_size: .8rem;
+        --windowIcon_width: 3rem;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    :root {
+        --windowIcon_font_size: 1rem;
+        --windowIcon_width: 6rem;
+    }
+}
+
+.windowIcon {
+    padding: .5rem;
+    border-radius: 5px;
+    width: var(--windowIcon_width);
+    height: var(--windowIcon_height);
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    color: var(--blue-00);
+    transition: background-color .25s ease-out, outline .25s ease-out, color .25s ease-out;
+}
+
+.windowIcon:hover {
+    background-color: rgba(255, 255, 255, .25);
+}
+
+.windowIcon:active {
+    background-color: rgba(255, 255, 255, 0);
+    outline: 1px solid var(--blue-00);
+}
+
+.windowIcon img,
+.windowIcon svg {
+    width: var(--windowIcon_display_size);
+    height: var(--windowIcon_display_size);
+}
+
+.windowIcon p {
+    color: inherit;
+    width: max-content;
+    height: calc(var(--windowIcon_height) - var(--windowIcon_display_size));
+    margin: 0;
+    text-align: center;
+    font-family: monospace;
+    font-size: var(--windowIcon_font_size);
+}

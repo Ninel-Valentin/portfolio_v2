@@ -6,34 +6,52 @@ export default class Consts {
         // Approximation
         height: 500,
         width: 650
-    }
+    };
 
     static instanceType = {
         App: "App",
         Directory: "Directory"
-    }
+    };
+
+    static deviceType = {
+        Mobile: "Mobile",
+        Desktop: "Desktop"
+    };
 
     static applications = {
         name: {
+            "projects": "projects",
+            "social": "social",
+            "linkedin": "linkedin",
+            "history": "history",
+            "about": "about",
+            "mail": "mail",
+            "settings": "settings",
+            "recycle bin": "recycle bin",
+            "github": "github"
+        },
+        type: {
             "linkedin": "linkedin",
             "directory": "directory",
             "projects": "directory",
-            "contact": "directory",
+            "social": "directory",
             "history": "history",
-            "info": "info",
+            "about": "about",
             "mail": "mail",
             "settings": "settings",
-            "recycle bin": "recycle bin"
+            "recycle bin": "recycle bin",
+            "github": "github"
         },
         title: {
             "linkedin": "LinkedIn",
             "projects": "Projects",
-            "contact": "Contact",
+            "social": "Social",
             "history": "History",
-            "info": "Info",
+            "about": "About me",
             "mail": "Mail",
             "settings": "Settings",
-            "recycle bin": "Recycle Bin"
+            "recycle bin": "Recycle Bin",
+            "github": "Github"
         }
     };
 };

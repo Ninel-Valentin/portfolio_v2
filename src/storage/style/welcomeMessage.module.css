@@ -1,0 +1,70 @@
+:root {
+    --welcomeMsg-font-size: 10rem;
+    --welcomeMsg-top: 5dvh;
+
+    --continueMsg-font-size: 2rem;
+}
+
+.welcomeP {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-family: "Courier New", Courier, monospace;
+    cursor:default;
+}
+
+#welcomeMsg {
+    color: var(--white-0);
+    top: var(--welcomeMsg-top);
+    font-size: var(--welcomeMsg-font-size);
+}
+
+#welcomeMsg>span#underscore {
+    color:var(--white-0);
+    animation: blink infinite step-end .75s;
+}
+
+@keyframes blink {
+    0% {
+        color: transparent;
+    }
+
+    50% {
+        color: var(--white-0);
+    }
+
+    100% {
+        color: transparent;
+    }
+}
+
+#continueMsg {
+    color: transparent;
+    top: calc(var(--welcomeMsg-top) + var(--welcomeMsg-font-size) + var(--continueMsg-font-size));
+    font-size: var(--continueMsg-font-size);
+    font-weight: bolder;
+}
+
+#continueMsg[data-visible] {
+    animation: fade infinite linear 2s;
+}
+
+@keyframes fade {
+    0% {
+        color: transparent;
+    }
+
+    25% {
+        color: var(--white-0);
+    }
+
+    75% {
+        color: var(--white-0);
+    }
+
+    100% {
+        color: transparent;
+    }
+}

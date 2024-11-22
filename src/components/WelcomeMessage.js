@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../storage/style/components/welcomeMessage.module.css';
+import styles from '../storage/style/welcomeMessage.module.css';
 
 import ApplyTypingAnimation from '../storage/scripts/screen/helloMsgAnimation.js';
 import { setCookie } from '../storage/scripts/CookieManager.js';

@@ -1,0 +1,25 @@
+:root {
+    --desktop-icons-col-gap: calc((var(--desktop-icons-space) - var(--windowIcon_width))/2);
+    --desktop-icons-row-gap: calc((var(--desktop-icons-space) - var(--windowIcon_height))/2);
+}
+
+@media only screen and (max-width: 600px) {
+    :root {
+        --desktop-icons-space: 5rem;
+        --desktop-icons-col-gap: calc((var(--desktop-icons-space) - var(--windowIcon_width))/2);
+        --desktop-icons-row-gap: calc((var(--desktop-icons-space) - var(--windowIcon_height))/2);
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    :root {
+        --desktop-icons-space: 10rem;
+        --desktop-icons-col-gap: calc((var(--desktop-icons-space) - var(--windowIcon_width))/2);
+        --desktop-icons-row-gap: calc((var(--desktop-icons-space) - var(--windowIcon_height))/2);
+    }
+}
+
+main {
+    width: calc(100% - 2 * var(--desktop-icons-col-gap));
+    max-height: calc(100vh - var(--taskBar-height));
+}

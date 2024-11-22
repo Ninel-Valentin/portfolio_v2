@@ -1,8 +1,7 @@
 import React from "react";
 import reactUtils from "../../storage/scripts/utils/reactUtils.js";
 import Consts from "../../storage/scripts/utils/Consts.js";
-import utils from "../../storage/scripts/utils/utils.js";
-import styles from '../../storage/style/components/taskbar.module.css';
+import styles from '../../storage/style/taskbar/taskbar.module.css';
 import TaskbarTooltipMenu from "./TaskbarTooltipMenu.js";
 
 export default class TaskbarAppInstance extends React.Component {
@@ -42,7 +41,7 @@ export default class TaskbarAppInstance extends React.Component {
             }}
             data-select={`taskbarInstanceWindow_${this.id}`}
             className={`${styles.taskbarAppInstance} ${styles.interactiveTile}${this.appUtils.isIdActive(this.id) ? ` ${styles.focused}` : ''}`}>
-            {reactUtils.loadDisplayIcon(Consts.applications.name[this.name])}
+            {reactUtils.loadDisplayIcon(Consts.applications.type[this.name])}
             {this.loadContextMenu()}
         </div>)
     }

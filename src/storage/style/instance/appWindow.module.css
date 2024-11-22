@@ -1,0 +1,93 @@
+:root {
+    --menu-bar-height: 2rem;
+}
+
+.appInstanceWindow {
+    min-width: min(80vh, 80vw);
+    min-height: calc(.8 * min(80vh, 80vw));
+    aspect-ratio: 1.5;
+    border: 2px solid var(--blue-15);
+    border-top: none;
+    position: absolute;
+    overflow: hidden;
+}
+
+.appMenuBar {
+    background-color: var(--blue-15);
+    color: var(--blue-00);
+    width: 100%;
+    height: var(--menu-bar-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appInstanceWindow[class*="active"] {
+    border: 2px solid var(--blue-09);
+    border-top: none;
+}
+
+.appInstanceWindow[class*="active"] .appMenuBar {
+    background-color: var(--blue-09);
+}
+
+.appMenuBar p {
+    margin: 0;
+    height: 100%;
+    width: fit-content;
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appMenuBar div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appMenuBarIcon {
+    height: 100%;
+    margin: 5px;
+    aspect-ratio: 1;
+}
+
+.appMenuBarIcon svg {
+    height: 100%;
+    width: 100%;
+}
+
+.appMenuBar div>div {
+    height: var(--menu-bar-height);
+    width: var(--menu-bar-height);
+    cursor: pointer;
+}
+
+.appMenuBar div>div:hover {
+    background-color: var(--blue-12);
+}
+
+.appInstanceWindow[class*="active"] .appMenuBar div>div:hover {
+    background-color: var(--blue-15);
+}
+
+.appContent {
+    background-color: var(--blue-12);
+    width: 100%;
+    height: calc(100% - var(--menu-bar-height));
+}
+
+.appContent[class*="directoryDisplay"] {
+    width: calc(100% - 2*var(--desktop-icons-col-gap));
+    height: calc(100% - var(--menu-bar-height) - 2*var(--desktop-icons-row-gap));
+}
+
+.appContent iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.appContent iframe.inactiveFrame {
+    pointer-events: none
+}

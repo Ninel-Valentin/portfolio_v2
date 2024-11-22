@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Screen from "../components/Screen.js";
 import Taskbar from "../components/taskbar/Taskbar.js";
 import appUtils from "../storage/scripts/utils/appUtils.js";
+import Consts from "../storage/scripts/utils/Consts.js";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
                  * name: String
                  * src: String/null
                  * zIndex: number
+                 * isResizeable: bool - if false, isMinimized and isMaximized will no longer be used
                  * isMinimized: bool - minimized or shown on the screen
                  * isMaximized: bool - fullscreen or normal size
                 */
@@ -24,8 +26,12 @@ export default class App extends React.Component {
             taskbar: {
                 activeContext: null
             },
-            screen: {
-
+            // Same rule as in css
+            deviceType: window.innerWidth <= 600 ? Consts.deviceType.Mobile : Consts.deviceType.Desktop,
+            content: {
+                history: {
+                    activeId: null
+                }
             }
         };
 
@@ -36,6 +42,15 @@ export default class App extends React.Component {
 
         // Main point of control
         this.appUtils = new appUtils(this.setAppData, this.getAppData, this.forceUpdateApp);
+
+        window.addEventListener('resize', (e) => {
+            let deviceType = window.innerWidth <= 600 ? Consts.deviceType.Mobile : Consts.deviceType.Desktop;
+            if (this.getAppData().deviceType != deviceType)
+                this.setAppData({
+                    ...this.getAppData(),
+                    deviceType
+                });
+        });
     }
 
     getAppData() {

@@ -1,0 +1,112 @@
+:root {
+    --taskBar-height: 3rem;
+    --taskBar-tooltip-option-height: 1.25rem;
+    --taskBar-tooltip-option-width: 8rem;
+    --taskbar-padding: .25rem;
+}
+
+#taskBar {
+    background-color: var(--blue-15);
+    width: 100vw;
+    height: var(--taskBar-height);
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+}
+
+#taskBar>.interactiveTile {
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+    padding: var(--taskbar-padding);
+    aspect-ratio: 1;
+    margin: 0 .5rem;
+    transition: all .1s ease-out;
+    border-radius: 5px;
+}
+
+#taskBar .interactiveTile:hover {
+    cursor: pointer;
+    background-color: var(--blue-06);
+}
+
+#osLogo {
+    fill: var(--blue-00);
+}
+
+#openApps {
+    width: calc(100vw - 3* var(--taskBar-height));
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.taskbarAppInstance {
+    padding: var(--taskbar-padding);
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+    background-color: var(--blue-12);
+}
+
+.taskbarAppInstance.focused {
+    background-color: var(--blue-09);
+}
+
+.taskbarAppInstance>svg {
+    height: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+    width: calc(var(--taskBar-height) - 2*var(--taskbar-padding));
+}
+
+#datetime {
+    width: calc(2* var(--taskBar-height)) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue-00);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+menu {
+    background-color: var(--blue-00);
+    outline: 1px solid var(--blue-00);
+    min-height: calc(3*var(--taskBar-tooltip-option-height));
+    min-width: calc(2*var(--taskBar-height)) !important;
+    width: var(--taskBar-tooltip-option-width);
+    position: relative;
+    top: calc(-1 * var(--taskBar-height) - 4*var(--taskBar-tooltip-option-height) - 8*var(--taskbar-padding));
+    left: calc(-1 * var(--taskbar-padding));
+    padding: 0 var(--taskbar-padding);
+    margin-block: 0;
+    margin-inline: 0;
+    padding-inline: 0;
+    list-style: none;
+}
+
+menu>* {
+    height: var(--taskBar-tooltip-option-height);
+    padding: var(--taskbar-padding);
+    width: calc(100% - 2*var(--taskbar-padding));
+    display: list-item;
+    color: var(--blue-00);
+}
+
+menu>span {
+    background-color: var(--blue-15);
+    text-transform: uppercase;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+menu li {
+    background-color: var(--blue-15);
+    outline: 1px solid var(--blue-00);
+    transition: background-color .1s ease-out,
+        outline .1s ease-out;
+}
+
+menu li:hover {
+    background-color: var(--blue-00);
+    color: var(--blue-15);
+}

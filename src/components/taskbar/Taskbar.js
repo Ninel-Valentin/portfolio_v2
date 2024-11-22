@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../storage/style/components/taskbar.module.css';
+import styles from '../../storage/style/taskbar/taskbar.module.css';
 
 import { ReactComponent as OSLogo } from '../../storage/svg/os.svg';
 import DateTime from './DateTime';

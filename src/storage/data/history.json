@@ -1,0 +1,76 @@
+{
+    "entries": [
+        {
+            "id": 0,
+            "title": "Internship",
+            "company": "Siemens Digital Industries Software",
+            "startDate": "06.11.2024",
+            "endDate": null,
+            "description": [
+                "Migrated an existing multi-language desktop application to Cloud using AWS services.",
+                "Reimplemented a C# desktop interface into React.JS web application."
+            ],
+            "softSkills": [
+                "Problem-Solving",
+                "Time Management",
+                "Adaptability",
+                "Communication"
+            ],
+            "tehnicalSkills": [
+                "AWS",
+                "C#",
+                "JavaScript",
+                "HTML & CSS"
+            ]
+        },
+        {
+            "id": 1,
+            "title": "Summer Internship",
+            "company": "Siemens Digital Industries Software",
+            "startDate": "01.06.2024",
+            "endDate": "01.09.2024",
+            "description": [
+                "Developed multiple microservices using Python and deployed themonline using AWS."
+            ],
+            "softSkills": [
+                "Problem-Solving",
+                "Time Management",
+                "Adaptability",
+                "Communication"
+            ],
+            "tehnicalSkills": [
+                "AWS",
+                "Python",
+                "JavaScript",
+                "HTML & CSS",
+                "SQL"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Junior Web-Crawler Developer",
+            "company": "ChannelSight",
+            "startDate": "01.03.2022",
+            "endDate": "06.11.2024",
+            "description": [
+                "Developed and improved Web-Crawlers on Apify using NodeJs.",
+                "Wrote custom JavaScript tools to ensure data quality in large volumes.",
+                "Created SQL queries for data preview."
+            ],
+            "softSkills": [
+                "Problem-Solving",
+                "Patience",
+                "Time Management",
+                "Adaptability"
+            ],
+            "tehnicalSkills": [
+                "JavaScript",
+                "NodeJS",
+                "Apify",
+                "SQL",
+                "HTML & CSS",
+                "Jira & Confluence"
+            ]
+        }
+    ]
+}

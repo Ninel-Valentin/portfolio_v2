@@ -1,11 +1,10 @@
 import React from 'react';
 
-import styles from '../storage/style/components/desktopSystem.module.css';
+import styles from '../storage/style/desktopSystem.module.css';
 import AppInstanceIcon from './icons/AppInstanceIcon.js';
 import DirectoryInstanceIcon from './icons/DirectoryInstanceIcon.js'
 import AppInstanceWindow from './instance/AppInstanceWindow.js'
 import DirectoryInstanceWindow from './instance/DirectoryInstanceWindow.js'
-import utils from '../storage/scripts/utils/utils.js';
 import Consts from '../storage/scripts/utils/Consts.js';
 
 export default class DesktopSystem extends React.Component {
@@ -18,7 +17,7 @@ export default class DesktopSystem extends React.Component {
 
     render() {
         return (<>
-            <main>
+            <main className='directoryDisplay'>
                 {this.RenderDesktopIcons()}
                 {this.RenderInstanceWindows()}
             </main>
@@ -41,11 +40,10 @@ export default class DesktopSystem extends React.Component {
         return (<>
             {/* TODO: https://www.linkedin.com/badges/profile/create?vanityname=ninel-valentin-banica&preferredlocale=en_US&trk=public_profile-settings_badge */}
             {/* <AppInstanceIcon appUtils={this.appUtils} src="https://www.linkedin.com/in/ninel-valentin-banica/" name="linkedin" /> */}
-            <DirectoryInstanceIcon appUtils={this.appUtils} name="contact" />
+            <DirectoryInstanceIcon appUtils={this.appUtils} name="social" />
             <DirectoryInstanceIcon appUtils={this.appUtils} name="projects" />
             <AppInstanceIcon appUtils={this.appUtils} name="history" />
-            <AppInstanceIcon appUtils={this.appUtils} name="mail" />
-            <AppInstanceIcon appUtils={this.appUtils} name="info" />
+            <AppInstanceIcon appUtils={this.appUtils} name="about" />
             <AppInstanceIcon appUtils={this.appUtils} name="settings" />
             <AppInstanceIcon appUtils={this.appUtils} name="recycle bin" />
         </>);
@@ -63,6 +61,7 @@ export default class DesktopSystem extends React.Component {
                         name={appInstance.name}
                         id={appInstance.id}
                         src={appInstance.src || null}
+                        instanceType={appInstance.type}
                         key={`appInstanceWindow_key_${appInstance.id}`} />
                 case Consts.instanceType.Directory:
                     return <DirectoryInstanceWindow
@@ -70,6 +69,7 @@ export default class DesktopSystem extends React.Component {
                         position={position}
                         name={appInstance.name}
                         id={appInstance.id}
+                        instanceType={appInstance.type}
                         key={`appInstanceWindow_key_${appInstance.id}`} />
             }
         })}</>)

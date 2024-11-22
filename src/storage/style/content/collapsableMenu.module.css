@@ -1,0 +1,128 @@
+:root {
+    --menuHeader_height: 2rem;
+    --menuHeader_padding_vertical: .25rem;
+    --menuHeader_padding: var(--menuHeader_padding_vertical) 5rem;
+}
+
+.collapsableMenu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.collapsableMenuEntry {
+    width: 100%;
+    border-bottom: 1px solid var(--blue-09);
+    color: var(--blue-09);
+}
+
+/* #region ODD/EVEN */
+
+.collapsableMenuEntry:nth-child(odd) {
+    background-color: var(--white-0);
+}
+
+.collapsableMenuEntry:nth-child(odd) .collapsableMenuHeader {
+    color: var(--blue-15);
+}
+
+.collapsableMenuEntry:nth-child(odd) stop:first-child {
+    stop-color: var(--blue-12);
+}
+
+.collapsableMenuEntry:nth-child(odd) stop:last-child {
+    stop-color: var(--blue-15);
+}
+
+.collapsableMenuEntry:nth-child(odd) path{
+    fill: url('#light-gradient');
+}
+
+
+.collapsableMenuEntry:nth-child(even) {
+    background-color: var(--blue-15);
+}
+
+.collapsableMenuEntry:nth-child(even) .collapsableMenuHeader {
+    color: var(--blue-00);
+}
+
+.collapsableMenuEntry:nth-child(even) stop:first-child {
+    stop-color: var(--blue-00);
+}
+
+.collapsableMenuEntry:nth-child(even) stop:last-child {
+    stop-color: var(--blue-00);
+}
+
+.collapsableMenuEntry:nth-child(even) path{
+    fill: url('#dark-gradient');
+}
+
+
+
+/* #endregion */
+
+.collapsableMenuHeader {
+    cursor: pointer;
+    min-height: var(--menuHeader_height);
+    outline: black 1px solid;
+    transition: background-color .25s ease-in-out, color .25s ease-in-out;
+}
+
+.collapsableMenuHeader>p {
+    padding: var(--menuHeader_padding);
+}
+
+.collapsableMenuHeader>div>svg {
+    position: relative;
+    bottom: calc(-1* var(--menuHeader_padding_vertical));
+}
+
+.collapsableMenuContent>div>svg {
+    position: relative;
+    top: var(--menuHeader_padding_vertical);
+}
+
+.collapsableMenuContent {
+    overflow: hidden;
+    height: 0;
+    transition: height .25s ease-out;
+}
+
+[class*="active"]>.collapsableMenuContent {
+    height: 10rem;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--menuHeader_padding);
+}
+
+.titleSection>span {
+    font-weight: bold;
+}
+
+.title {
+    color: var(--dark-gray-0);
+    font-weight: 700;
+    margin: 0;
+}
+
+
+.collapsableMenuHeader:hover .title {
+    color: var(--light-gray-0);
+}
+
+.company {
+    margin: 0;
+    font-size: larger;
+    font-weight: 500;
+    color: var(--blue-5);
+}
+
+.collapsableMenuHeader:hover .company {
+    color: var(--blue-1);
+}

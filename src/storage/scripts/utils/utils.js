@@ -1,8 +1,6 @@
-import { getCookie, setCookie } from '../CookieManager.js';
 import Consts from './Consts.js';
 
 export default class utils {
-
     static clampOnScreen(width, height) {
         return [
             Math.max(0, Math.min(width, window.innerWidth)),

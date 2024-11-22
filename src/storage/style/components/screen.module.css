@@ -1,9 +1,0 @@
-#screen {
-    background-color: var(--dark-gray-1);
-    background-image: url('../../img/wallpaper/wallpaper_Xlarge.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    width: 100vw;
-    height: calc(100vh - var(--taskBar-height));
-}

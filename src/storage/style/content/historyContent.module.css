@@ -1,0 +1,12 @@
+.date {
+    display: inline-block;
+    width: 5rem;
+}
+
+.date:first-child {
+    text-align: right;
+}
+
+.date:last-child {
+    text-align: left;
+}

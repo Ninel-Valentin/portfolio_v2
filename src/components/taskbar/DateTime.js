@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../../storage/style/components/taskbar.module.css';
+import styles from '../../storage/style/taskbar/taskbar.module.css';
 
 const DateTime = () => {
     const [timeData, setTimeData] = useState({
