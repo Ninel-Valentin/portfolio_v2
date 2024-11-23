@@ -16,13 +16,13 @@
 }
 
 #welcomeMsg {
-    color: var(--white-0);
+    color: var(--white-00);
     top: var(--welcomeMsg-top);
     font-size: var(--welcomeMsg-font-size);
 }
 
 #welcomeMsg>span#underscore {
-    color:var(--white-0);
+    color:var(--white-00);
     animation: blink infinite step-end .75s;
 }
 
@@ -32,7 +32,7 @@
     }
 
     50% {
-        color: var(--white-0);
+        color: var(--white-00);
     }
 
     100% {
@@ -57,11 +57,11 @@
     }
 
     25% {
-        color: var(--white-0);
+        color: var(--white-00);
     }
 
     75% {
-        color: var(--white-0);
+        color: var(--white-00);
     }
 
     100% {

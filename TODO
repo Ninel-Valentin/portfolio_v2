@@ -1,2 +1,1 @@
-Issue with the def in svg because the gradient is defined with same id everywhere (even and odd)
-Redefine from code the used gradient and the even/odd gradient
+info button with default open window on how to use

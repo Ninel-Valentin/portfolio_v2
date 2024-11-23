@@ -1,5 +1,6 @@
 :root {
     --blue-00: #9FD3C7;
+    --blue-02: #88b4cd;
     --blue-03: #508C9B;
     --blue-06: #395666;
     --blue-09: #134B70;
@@ -7,7 +8,8 @@
     --blue-14: #16325B;
     --blue-15: #001C30;
 
-    --white-0: #ECECEC;
+    --white-00: #ECECEC;
+    --white-03: #d2e2e8;
 }
 
 * {

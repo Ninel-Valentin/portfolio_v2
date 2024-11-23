@@ -10,3 +10,16 @@
 .date:last-child {
     text-align: left;
 }
+
+.companyName {
+    display: inline-block;
+    margin: 0;
+    font-size: larger;
+    font-weight: 500;
+}
+
+.companyLogo {
+    display: block;
+    padding: var(--menuHeader_padding);
+    width: 30%;
+}

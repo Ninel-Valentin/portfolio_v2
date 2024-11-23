@@ -73,9 +73,26 @@
 }
 
 .appContent {
+    overflow-y: auto;
     background-color: var(--blue-12);
     width: 100%;
     height: calc(100% - var(--menu-bar-height));
+}
+
+/* width */
+.appContent::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.appContent::-webkit-scrollbar-track {
+    background-color: var(--blue-00);
+}
+
+/* Handle */
+.appContent::-webkit-scrollbar-thumb {
+    background-color: var(--blue-15);
+
 }
 
 .appContent[class*="directoryDisplay"] {

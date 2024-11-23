@@ -4,6 +4,7 @@
             "id": 0,
             "title": "Internship",
             "company": "Siemens Digital Industries Software",
+            "logo": "siemens",
             "startDate": "06.11.2024",
             "endDate": null,
             "description": [
@@ -16,7 +17,7 @@
                 "Adaptability",
                 "Communication"
             ],
-            "tehnicalSkills": [
+            "technicalSkills": [
                 "AWS",
                 "C#",
                 "JavaScript",
@@ -27,10 +28,11 @@
             "id": 1,
             "title": "Summer Internship",
             "company": "Siemens Digital Industries Software",
+            "logo": "siemens",
             "startDate": "01.06.2024",
             "endDate": "01.09.2024",
             "description": [
-                "Developed multiple microservices using Python and deployed themonline using AWS."
+                "Developed multiple microservices using Python and deployed them online using AWS."
             ],
             "softSkills": [
                 "Problem-Solving",
@@ -38,7 +40,7 @@
                 "Adaptability",
                 "Communication"
             ],
-            "tehnicalSkills": [
+            "technicalSkills": [
                 "AWS",
                 "Python",
                 "JavaScript",
@@ -49,7 +51,8 @@
         {
             "id": 2,
             "title": "Junior Web-Crawler Developer",
-            "company": "ChannelSight",
+            "company": "ChannelSight: eCommerce experience",
+            "logo": "channelsight",
             "startDate": "01.03.2022",
             "endDate": "06.11.2024",
             "description": [
@@ -63,7 +66,7 @@
                 "Time Management",
                 "Adaptability"
             ],
-            "tehnicalSkills": [
+            "technicalSkills": [
                 "JavaScript",
                 "NodeJS",
                 "Apify",

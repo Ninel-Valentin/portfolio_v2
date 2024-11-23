@@ -19,46 +19,97 @@
 /* #region ODD/EVEN */
 
 .collapsableMenuEntry:nth-child(odd) {
-    background-color: var(--white-0);
+    background-color: var(--white-00);
+    transition: background-color .25s ease-out;
+}
+
+.collapsableMenuEntry:nth-child(odd):hover {
+    background-color: var(--white-03);
 }
 
 .collapsableMenuEntry:nth-child(odd) .collapsableMenuHeader {
     color: var(--blue-15);
 }
 
-.collapsableMenuEntry:nth-child(odd) stop:first-child {
+[id="dark-gradient"] stop:first-child {
     stop-color: var(--blue-12);
 }
 
-.collapsableMenuEntry:nth-child(odd) stop:last-child {
+[id="dark-gradient"] stop:last-child {
     stop-color: var(--blue-15);
 }
 
-.collapsableMenuEntry:nth-child(odd) path{
-    fill: url('#light-gradient');
+[id="dark-hover-gradient"] stop:first-child {
+    stop-color: var(--blue-09);
+}
+
+[id="dark-hover-gradient"] stop:last-child {
+    stop-color: var(--blue-12);
+}
+
+.collapsableMenuEntry:nth-child(odd) path {
+    fill: url('#dark-gradient');
+}
+
+.collapsableMenuEntry:nth-child(odd):hover path {
+    fill: url('#dark-hover-gradient');
+}
+
+.collapsableMenuEntry:nth-child(odd) .highlightedSpan {
+    color: var(--white-00);
+    background-color: var(--blue-15);
+    border-radius: 5px;
+    padding: 5px;
 }
 
 
 .collapsableMenuEntry:nth-child(even) {
     background-color: var(--blue-15);
+    transition: background-color .25s ease-out;
+}
+
+.collapsableMenuEntry:nth-child(even):hover {
+    background-color: var(--blue-09);
 }
 
 .collapsableMenuEntry:nth-child(even) .collapsableMenuHeader {
     color: var(--blue-00);
 }
 
-.collapsableMenuEntry:nth-child(even) stop:first-child {
+[id="light-gradient"] stop:first-child {
     stop-color: var(--blue-00);
 }
 
-.collapsableMenuEntry:nth-child(even) stop:last-child {
+[id="light-gradient"] stop:last-child {
+    stop-color: var(--blue-03);
+}
+
+[id="light-hover-gradient"] stop:first-child {
+    stop-color: var(--blue-02);
+}
+
+[id="light-hover-gradient"] stop:last-child {
     stop-color: var(--blue-00);
 }
 
-.collapsableMenuEntry:nth-child(even) path{
-    fill: url('#dark-gradient');
+.collapsableMenuEntry:nth-child(even) path {
+    fill: url('#light-gradient');
 }
 
+.collapsableMenuEntry:nth-child(even):hover path {
+    fill: url('#light-hover-gradient');
+}
+
+.collapsableMenuEntry:nth-child(even) .contentBody {
+    color: var(--white-00);
+}
+
+.collapsableMenuEntry:nth-child(even) .highlightedSpan {
+    color: var(--white-00);
+    background-color: var(--blue-15);
+    border-radius: 5px;
+    padding: 5px;
+}
 
 
 /* #endregion */
@@ -91,7 +142,8 @@
 }
 
 [class*="active"]>.collapsableMenuContent {
-    height: 10rem;
+    height: fit-content;
+    min-height: 10rem;
 }
 
 .titleSection {
@@ -106,7 +158,7 @@
 }
 
 .title {
-    color: var(--dark-gray-0);
+    border-bottom: dashed 5px var(--blue-15);
     font-weight: 700;
     margin: 0;
 }
@@ -116,13 +168,14 @@
     color: var(--light-gray-0);
 }
 
-.company {
-    margin: 0;
-    font-size: larger;
-    font-weight: 500;
-    color: var(--blue-5);
+.collapsableMenu .contentBody {
+    padding: 0 5%;
+    width: 90%;
 }
 
-.collapsableMenuHeader:hover .company {
-    color: var(--blue-1);
+.contentBody .splitContent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }

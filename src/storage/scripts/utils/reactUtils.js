@@ -22,6 +22,13 @@ import { ReactComponent as Wave08 } from '../../svg/wave/wave08.svg';
 import { ReactComponent as Wave09 } from '../../svg/wave/wave09.svg';
 import { ReactComponent as Wave10 } from '../../svg/wave/wave10.svg';
 
+import SiemensLogo from '../../img/logo/siemens.png';
+import CSLogo from '../../img/logo/channelsight.png';
+import MCLogo from '../../img/logo/mcdonalds.png';
+import ProfiLogo from '../../img/logo/profi.png';
+
+import Working from '../../../components/content/temp/Working.js';
+
 import HistoryContent from '../../../components/content/HistoryContent.js';
 import AppInstanceIcon from '../../../components/icons/AppInstanceIcon.js';
 
@@ -51,9 +58,6 @@ export default class reactUtils {
     }
 
     static loadDirectoryContent(name, appUtils) {
-
-
-
         switch (Consts.applications.name[name]) {
             case Consts.applications.name["social"]:
                 return (<>
@@ -80,14 +84,23 @@ export default class reactUtils {
         switch (Consts.applications.name[name]) {
             case Consts.applications.name["history"]:
                 return <HistoryContent
+                    key={`historyContent_${name}`}
                     appUtils={appUtils} />;
             default:
-                return;
+                return <Working />;
+        }
+    }
+
+    static loadCompanyLogo(name) {
+        switch (name) {
+            case 'siemens':
+                return SiemensLogo;
+            case 'channelsight':
+                return CSLogo;
         }
     }
 
     static loadSVGWave(flipped) {
-
         const waves = [
             <Wave01 />,
             <Wave02 />,

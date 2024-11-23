@@ -40,7 +40,6 @@ export default class HistoryContent extends React.Component {
     }
 
     generateMenu(entry) {
-        
         let header = this.createHeader(entry);
         let content = this.createContent(entry);
 
@@ -48,26 +47,46 @@ export default class HistoryContent extends React.Component {
     }
 
     createHeader(entry) {
-        // let untilPresent = !entry.endDate;
-        // let presentTimestampStyle = untilPresent ? historyMenuStyles.presentDate : '';
-
         return <>
             <div className={collapsableMenuStyles.titleSection}>
                 <h2 className={collapsableMenuStyles.title}>{entry.title}</h2>
-                <span
-                // className={presentTimestampStyle}
-                >{this.parseDate(entry)}</span>
+                <span> {this.parseDate(entry)} </span>
             </div>
-            <p className={collapsableMenuStyles.company}>{entry.company}</p>
+            <img className={historyMenuStyles.companyLogo} src={reactUtils.loadCompanyLogo(entry.logo)} />
+            <p className={historyMenuStyles.companyName}>{entry.company}</p>
             {reactUtils.loadSVGWave(false)}
         </>;
     }
 
     createContent(entry) {
-        // return 
         return <>
             {reactUtils.loadSVGWave(true)}
-            content
+            <div className={collapsableMenuStyles.contentBody}>
+                <h3>Responsabilities:</h3>
+                {entry.description.map(description => {
+                    return (<>
+                        <p>◐ {description}</p>
+                    </>)
+                })}
+                <div className={collapsableMenuStyles.splitContent}>
+                    <div>
+                        <h3>Technical skills:</h3>
+                        {entry.softSkills.map(skill => {
+                            return (<>
+                                <p>↪ <span className={collapsableMenuStyles.highlightedSpan}>{skill}</span> ↩</p>
+                            </>)
+                        })}
+                    </div>
+                    <div>
+                        <h3>Soft skills:</h3>
+                        {entry.technicalSkills.map(skill => {
+                            return (<>
+                                <p>↪ <span className={collapsableMenuStyles.highlightedSpan}>{skill}</span> ↩</p>
+                            </>)
+                        })}
+                    </div>
+                </div>
+            </div>
         </>
     }
 
