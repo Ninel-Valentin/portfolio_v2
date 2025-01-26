@@ -22,7 +22,6 @@ export default class HistoryContent extends React.Component {
         return <CollapsableMenu
             entries={entries}
         />
-
     }
 
     generateEntries() {
@@ -31,10 +30,12 @@ export default class HistoryContent extends React.Component {
             return <CollapsableMenuEntry
                 windowIdentifier={'history'}
                 appUtils={this.appUtils}
-                key={`CollapsableMenuEntry_${i}`}
+                key={`History_CollapsableMenuEntry_${i}`}
                 id={entry.id}
                 header={header}
                 content={content}
+                getActiveSectionFunction={this.appUtils.getActiveHistoryId}
+                setActiveSectionFunction={this.appUtils.setActiveHistoryId}
             />
         });
     }
@@ -91,7 +92,6 @@ export default class HistoryContent extends React.Component {
     }
 
     parseDate(entry) {
-
         let startDate = new Date(entry.startDate).toLocaleString('default', { month: 'short', year: 'numeric' });
         let endDate = entry.endDate ? new Date(entry.endDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : 'Present';
 

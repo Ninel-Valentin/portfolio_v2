@@ -27,10 +27,11 @@ import CSLogo from '../../img/logo/channelsight.png';
 import MCLogo from '../../img/logo/mcdonalds.png';
 import ProfiLogo from '../../img/logo/profi.png';
 
-import Working from '../../../components/content/temp/Working.js';
+import PlaceholderContent from '../../../components/content/temp/PlaceholderContent.js';
 
 import HistoryContent from '../../../components/content/HistoryContent.js';
 import AppInstanceIcon from '../../../components/icons/AppInstanceIcon.js';
+import ProjectsContent from '../../../components/content/ProjectsContent.js';
 
 export default class reactUtils {
 
@@ -73,8 +74,6 @@ export default class reactUtils {
                         appUtils={appUtils}
                         name="mail" />
                 </>);
-            case Consts.applications.name["projects"]:
-                return;
             default:
                 return;
         }
@@ -86,8 +85,11 @@ export default class reactUtils {
                 return <HistoryContent
                     key={`historyContent_${name}`}
                     appUtils={appUtils} />;
+            case Consts.applications.name["projects"]:
+                return <ProjectsContent
+                    appUtils={appUtils} />;
             default:
-                return <Working />;
+                return <PlaceholderContent />;
         }
     }
 

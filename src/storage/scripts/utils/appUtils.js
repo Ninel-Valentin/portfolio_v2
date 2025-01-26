@@ -9,6 +9,12 @@ export default class appUtils {
 
         this.setActiveInstanceId = this.setActiveInstanceId.bind(this);
         this.getActiveInstanceId = this.getActiveInstanceId.bind(this);
+
+        this.getActiveHistoryId = this.getActiveHistoryId.bind(this);
+        this.setActiveHistoryId = this.setActiveHistoryId.bind(this);
+        this.getActiveProjectId = this.getActiveProjectId.bind(this);
+        this.setActiveProjectId = this.setActiveProjectId.bind(this);
+        
     }
 
     isIdActive(idToCheck) {
@@ -273,6 +279,23 @@ export default class appUtils {
             content: {
                 ...appData.content,
                 history: {
+                    activeId: instanceId
+                }
+            }
+        });
+    }
+
+    getActiveProjectId() {
+        return this.getAppData().content.project.activeId;
+    }
+
+    setActiveProjectId(instanceId) {
+        const appData = this.getAppData();
+        this.setAppData({
+            ...appData,
+            content: {
+                ...appData.content,
+                project: {
                     activeId: instanceId
                 }
             }

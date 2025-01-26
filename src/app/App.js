@@ -31,6 +31,9 @@ export default class App extends React.Component {
             content: {
                 history: {
                     activeId: null
+                },
+                project: {
+                    activeId: null
                 }
             }
         };

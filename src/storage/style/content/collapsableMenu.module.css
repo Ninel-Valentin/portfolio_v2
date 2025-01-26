@@ -12,7 +12,6 @@
 
 .collapsableMenuEntry {
     width: 100%;
-    border-bottom: 1px solid var(--blue-09);
     color: var(--blue-09);
 }
 
@@ -60,6 +59,10 @@
     background-color: var(--blue-15);
     border-radius: 5px;
     padding: 5px;
+}
+
+.collapsableMenuEntry:nth-child(odd) .title {
+    border-bottom: dashed 5px var(--blue-15);
 }
 
 
@@ -111,6 +114,10 @@
     padding: 5px;
 }
 
+.collapsableMenuEntry:nth-child(even) .title {
+    border-bottom: dashed 5px var(--blue-00);
+}
+
 
 /* #endregion */
 
@@ -137,13 +144,13 @@
 
 .collapsableMenuContent {
     overflow: hidden;
-    height: 0;
-    transition: height .25s ease-out;
+    max-height: 0;
+    transition: all .25s ease-out;
 }
 
 [class*="active"]>.collapsableMenuContent {
     height: fit-content;
-    min-height: 10rem;
+    max-height: 50rem;
 }
 
 .titleSection {
@@ -158,11 +165,9 @@
 }
 
 .title {
-    border-bottom: dashed 5px var(--blue-15);
     font-weight: 700;
     margin: 0;
 }
-
 
 .collapsableMenuHeader:hover .title {
     color: var(--light-gray-0);

@@ -9,10 +9,11 @@ export default class CollapsableMenu extends React.Component {
     }
 
     render() {
-        return (<ul
-            className={styles.collapsableMenu}
-        >
-            {this.entries}
-        </ul>);
+        return (
+            <ul
+                className={styles.collapsableMenu}
+            >
+                {this.entries}
+            </ul>);
     }
 };

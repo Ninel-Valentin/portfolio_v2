@@ -1,0 +1,186 @@
+{
+    "entries": [
+        {
+            "id": 9,
+            "title": "Portfolio v2",
+            "createdDate": "Dec. 2024",
+            "shortDescription": "Website portfolio",
+            "description": [
+                "Personal portfolio website which emulates a desktop"
+            ],
+            "technologies": [
+                "JavaScript",
+                "ReactJS",
+                "NodeJS"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/portfolio_v2",
+            "Link": "https://ninel-valentin.com/",
+            "MediaPath": null
+        },
+        {
+            "id": 8,
+            "title": "CityInfo",
+            "createdDate": "Sept. 2024",
+            "shortDescription": "A weather and events information manager for different cities",
+            "description": [
+                "Decoupled microservices",
+                "Health checks",
+                "Insert or query events and weather entries"
+            ],
+            "technologies": [
+                "Python",
+                "Flask",
+                "AWS",
+                "HTML",
+                "CSS"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/CityInfo",
+            "Link": null,
+            "MediaPath": null
+        },
+        {
+            "id": 7,
+            "title": "Microservices tryout",
+            "createdDate": "Sept. 2024",
+            "shortDescription": "A working microservices template",
+            "description": [
+                "Decoupled microservices",
+                "Health checks"
+            ],
+            "technologies": [
+                "Python",
+                "Flask",
+                "AWS"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/Microservices",
+            "Link": null,
+            "MediaPath": null
+        },
+        {
+            "id": 6,
+            "title": "Falling sand simulation",
+            "createdDate": "Feb. 2024",
+            "shortDescription": "Interactive sand simulation on a JavaScript canvas",
+            "description": [],
+            "technologies": [
+                "JavaScript"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/FallingSandSimulation",
+            "Link": "https://ninel-valentin.github.io/FallingSandSimulation/",
+            "MediaPath": null
+        },
+        {
+            "id": 5,
+            "title": "Pathfinder application",
+            "createdDate": "Dec. 2023",
+            "shortDescription": "Pathfinder desktop application using graph search algorithms",
+            "description": [
+                "1. Draw a graph on a canvas or on a grid",
+                "2. Pick a starting and ending point",
+                "3. See a representation of the shortest path/least stops/least weight/etc."
+            ],
+            "technologies": [
+                "Java"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/PathFinder",
+            "Link": null,
+            "MediaPath": "pathfinderJava"
+        },
+        {
+            "id": 4,
+            "title": "Web retail application",
+            "createdDate": "Sept. 2023",
+            "shortDescription": "Online shop for sellers and buyers",
+            "description": [
+                "Mobile/Desktop support",
+                "Become a seller and list your products and see profit analytics",
+                "Become a buyer and browse items"
+            ],
+            "technologies": [
+                "JavaScript",
+                "ReactJS",
+                "ExpressJS",
+                "NodeJS",
+                "SQL",
+                "Azure"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/WebRetailProject",
+            "Link": null,
+            "MediaPath": "webretail"
+        },
+        {
+            "id": 3,
+            "title": "Graph search application",
+            "createdDate": "May 2023",
+            "shortDescription": "A console application used to manage graph searches",
+            "description": [
+                "1. Add/Remove nodes/edges",
+                "2. Pick a starting and ending point",
+                "3. Get the shortest path between them",
+                "Load/Save templates",
+                "Toggle settings on/off"
+            ],
+            "technologies": [
+                "C++"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/GraphSearch",
+            "Link": null,
+            "MediaPath": "pathfinderCpp"
+        },
+        {
+            "id": 2,
+            "title": "Wave function collapse",
+            "createdDate": "Feb. 2023",
+            "shortDescription": "A visual representation of the Wave Function Collapse algorithm",
+            "description": [
+                "Generating random 2D tile maps"
+            ],
+            "technologies": [
+                "JavaScript"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/WaveFunctionCollapse",
+            "Link": "https://ninel-valentin.github.io/WaveFunctionCollapse/",
+            "MediaPath": null
+        },
+        {
+            "id": 1,
+            "title": "Portfolio",
+            "createdDate": "Mar. 2022",
+            "shortDescription": "Website portfolio",
+            "description": [
+                "First portfolio project",
+                "First React project"
+            ],
+            "technologies": [
+                "JavaScript",
+                "ReactJS",
+                "NodeJS"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/portfolio_v1",
+            "Link": "https://ninel-valentin.github.io/portfolio_v1/public/index",
+            "MediaPath": null
+        },
+        {
+            "id": 0,
+            "title": "MessageSender",
+            "createdDate": "Jun. 2021",
+            "shortDescription": "Chat web application",
+            "description": [
+                "Create an account, search for people and send a friend request",
+                "Personalize your profile page and restrict view access to some info",
+                "Personalize the look of your own page"
+            ],
+            "technologies": [
+                "C#",
+                "ASP.NET",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "SQL"
+            ],
+            "Repository": "https://github.com/Ninel-Valentin/MessageSender",
+            "Link": null,
+            "MediaPath": null
+        }
+    ]
+}
